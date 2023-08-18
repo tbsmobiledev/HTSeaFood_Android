@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/_15sdp">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sora_bold"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:padding="@dimen/_11sdp"
+        android:text="@string/sign_in"
+        android:textColor="@color/dark_text"
+        android:textSize="@dimen/_14ssp" />
+
+
+    <EditText
+        android:id="@+id/etEmailAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:background="@drawable/corner_round_editbox"
+        android:fontFamily="@font/sora_regular"
+        android:hint="@string/username"
+        android:imeOptions="actionNext"
+        android:includeFontPadding="false"
+        android:inputType="textEmailAddress"
+        android:padding="@dimen/_15sdp"
+        android:textColor="@color/dark_text"
+        android:textColorHint="@color/light_text"
+        android:textSize="@dimen/_12ssp" />
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:background="@drawable/corner_round_editbox"
+        android:drawableEnd="@drawable/eye"
+        android:fontFamily="@font/sora_regular"
+        android:hint="@string/password"
+        android:imeOptions="actionDone"
+        android:includeFontPadding="false"
+        android:inputType="textPassword"
+        android:padding="@dimen/_12sdp"
+        android:textColor="@color/dark_text"
+        android:textColorHint="@color/light_text"
+        android:textSize="@dimen/_12ssp" />
+
+
+    <TextView
+        android:id="@+id/tvSignIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:background="@drawable/corner_round_button"
+        android:fontFamily="@font/sora_bold"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:padding="@dimen/_12sdp"
+        android:text="@string/sign_in"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_15ssp" />
+
+
+</LinearLayout>

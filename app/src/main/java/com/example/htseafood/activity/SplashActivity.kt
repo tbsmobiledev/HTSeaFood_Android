@@ -22,14 +22,14 @@ class SplashActivity : AppCompatActivity() {
         val extras = intent.extras
         Handler(Looper.getMainLooper()).postDelayed({
 //            if (!isLogin) {
-//                startActivity(Intent(this, LandingActivity::class.java))
+//                startActivity(Intent(this, LoginActivity::class.java))
 //                finish()
 //            } else {
-//                startActivity(Intent(this, LandingActivity::class.java))
+//                startActivity(Intent(this, HomeActivity::class.java))
 //                finish()
 //            }
 
-            startActivity(Intent(this, HomeActivity::class.java))
+            startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }, 3000)
     }

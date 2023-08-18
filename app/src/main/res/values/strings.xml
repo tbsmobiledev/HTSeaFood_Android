@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">HTSeaFood</string>
+    <string name="sign_in">Sign In</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="invoice">Invoice</string>
+    <string name="order">Order</string>
+    <string name="shipment">Shipment</string>
 </resources>
