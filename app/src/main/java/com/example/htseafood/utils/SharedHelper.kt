@@ -3,8 +3,6 @@ package com.example.htseafood.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.example.htseafood.model.responses.UserResponse
-import com.google.gson.GsonBuilder
 
 class SharedHelper {
     companion object {
@@ -33,17 +31,17 @@ class SharedHelper {
         }
 
 
-        fun getUser(context: Context): UserResponse? {
-            sharedPreferences =
-                context.getSharedPreferences("htseafood_preferances", Context.MODE_PRIVATE)
-            return GsonBuilder()
-                .setLenient()
-                .create()
-                .fromJson(
-                    sharedPreferences!!.getString(Constants.UserData, ""),
-                    UserResponse::class.java
-                )
-        }
+//        fun getUser(context: Context): UserResponse? {
+//            sharedPreferences =
+//                context.getSharedPreferences("htseafood_preferances", Context.MODE_PRIVATE)
+//            return GsonBuilder()
+//                .setLenient()
+//                .create()
+//                .fromJson(
+//                    sharedPreferences!!.getString(Constants.UserData, ""),
+//                    UserResponse::class.java
+//                )
+//        }
 
 
         fun putKey(context: Context, Key: String?, value: Int?) {

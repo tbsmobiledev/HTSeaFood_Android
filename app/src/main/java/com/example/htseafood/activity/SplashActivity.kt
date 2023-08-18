@@ -1,0 +1,36 @@
+package com.example.htseafood.activity
+
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.view.WindowManager
+import com.example.htseafood.R
+import com.example.htseafood.utils.Constants
+import com.example.htseafood.utils.SharedHelper
+
+class SplashActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
+        setContentView(R.layout.activity_splash)
+        val isLogin = SharedHelper.getBoolKey(this, Constants.IS_LOGIN)
+        val extras = intent.extras
+        Handler(Looper.getMainLooper()).postDelayed({
+//            if (!isLogin) {
+//                startActivity(Intent(this, LandingActivity::class.java))
+//                finish()
+//            } else {
+//                startActivity(Intent(this, LandingActivity::class.java))
+//                finish()
+//            }
+
+            startActivity(Intent(this, HomeActivity::class.java))
+            finish()
+        }, 3000)
+    }
+}
