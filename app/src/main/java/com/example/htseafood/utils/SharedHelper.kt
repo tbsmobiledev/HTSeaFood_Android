@@ -16,10 +16,6 @@ class SharedHelper {
             editor!!.putString(Key, Value)
             editor!!.apply()
         }
-
-
-
-
     
 
         fun getKey(context: Context, Key: String?): String {
@@ -29,34 +25,6 @@ class SharedHelper {
             data = sharedPreferences!!.getString(Key, "").toString()
             return data
         }
-
-
-//        fun getUser(context: Context): UserResponse? {
-//            sharedPreferences =
-//                context.getSharedPreferences("htseafood_preferances", Context.MODE_PRIVATE)
-//            return GsonBuilder()
-//                .setLenient()
-//                .create()
-//                .fromJson(
-//                    sharedPreferences!!.getString(Constants.UserData, ""),
-//                    UserResponse::class.java
-//                )
-//        }
-
-
-        fun putKey(context: Context, Key: String?, value: Int?) {
-            sharedPreferences =
-                context.getSharedPreferences("htseafood_preferances", Context.MODE_PRIVATE)
-            editor = sharedPreferences!!.edit()
-            editor!!.putInt(Key, value!!)
-            editor!!.apply()
-        }
-
-//        fun getIntKey(context: Context, Key: String?): Int {
-//            sharedPreferences =
-//                context.getSharedPreferences("htseafood_preferances", Context.MODE_PRIVATE)
-//            return sharedPreferences!!.getInt(Key, -1)
-//        }
 
 
         fun putKey(context: Context, Key: String?, Value: Boolean?) {

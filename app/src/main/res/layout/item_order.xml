@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/llInvoice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/corner_round_box"
+        android:orientation="vertical"
+        android:padding="@dimen/_10sdp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_minus2sdp">
+
+
+            <TextView
+                android:id="@+id/tvInvoiceNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@drawable/corner_round_blue_bg"
+                android:fontFamily="@font/sora_bold"
+                android:includeFontPadding="false"
+                android:paddingHorizontal="@dimen/_8sdp"
+                android:paddingVertical="@dimen/_2sdp"
+                android:text="#1  Order No : 2442774"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_10ssp" />
+
+            <ImageView
+                android:id="@+id/ivArrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/_2sdp"
+                android:src="@drawable/arrow"
+                android:tag="0" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sora_bold"
+                android:includeFontPadding="false"
+                android:text="Customer No:"
+                android:textColor="@color/dark_text"
+                android:textSize="@dimen/_12ssp" />
+
+            <TextView
+                android:id="@+id/tvCustNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:fontFamily="@font/sora_regular"
+                android:includeFontPadding="false"
+                android:text="000125"
+                android:textColor="@color/dark_text"
+                android:textSize="@dimen/_12ssp" />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_1sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sora_bold"
+                android:includeFontPadding="false"
+                android:text="Customer Name:"
+                android:textColor="@color/dark_text"
+                android:textSize="@dimen/_12ssp" />
+
+            <TextView
+                android:layout_marginStart="@dimen/_2sdp"
+                android:id="@+id/tvCustName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/sora_regular"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:text="TEST CUSTOMER - DO NOT USE"
+                android:textColor="@color/dark_text"
+                android:textSize="@dimen/_12ssp" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llExtraView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sora_regular"
+                    android:includeFontPadding="false"
+                    android:text="Address:"
+                    android:textColor="@color/light_text"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:id="@+id/tvAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:fontFamily="@font/sora_regular"
+                    android:includeFontPadding="false"
+                    android:text="123 fake street"
+                    android:textColor="@color/light_text"
+                    android:textSize="@dimen/_11ssp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sora_regular"
+                    android:includeFontPadding="false"
+                    android:text="City:"
+                    android:textColor="@color/light_text"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:id="@+id/tvCity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:fontFamily="@font/sora_regular"
+                    android:includeFontPadding="false"
+                    android:text="SPRINGFIELD"
+                    android:textColor="@color/light_text"
+                    android:textSize="@dimen/_11ssp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sora_regular"
+                    android:includeFontPadding="false"
+                    android:text="Contact:"
+                    android:textColor="@color/light_text"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:id="@+id/tvContact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:fontFamily="@font/sora_regular"
+                    android:includeFontPadding="false"
+                    android:text="TEST"
+                    android:textColor="@color/light_text"
+                    android:textSize="@dimen/_11ssp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sora_regular"
+                    android:includeFontPadding="false"
+                    android:text="County:"
+                    android:textColor="@color/light_text"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:id="@+id/tvCounty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:fontFamily="@font/sora_regular"
+                    android:includeFontPadding="false"
+                    android:text="INDIA (IN)"
+                    android:textColor="@color/light_text"
+                    android:textSize="@dimen/_11ssp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sora_regular"
+                    android:includeFontPadding="false"
+                    android:text="Order Date:"
+                    android:textColor="@color/light_text"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:id="@+id/tvOrderdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:fontFamily="@font/sora_regular"
+                    android:includeFontPadding="false"
+                    android:text="02-10-2023"
+                    android:textColor="@color/light_text"
+                    android:textSize="@dimen/_11ssp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sora_regular"
+                    android:includeFontPadding="false"
+                    android:text="Posting Date:"
+                    android:textColor="@color/light_text"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:id="@+id/tvPostingdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:fontFamily="@font/sora_regular"
+                    android:includeFontPadding="false"
+                    android:text="02-10-2023"
+                    android:textColor="@color/light_text"
+                    android:textSize="@dimen/_11ssp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sora_regular"
+                    android:includeFontPadding="false"
+                    android:text="Shipment Date:"
+                    android:textColor="@color/light_text"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:id="@+id/tvShipmentdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:fontFamily="@font/sora_regular"
+                    android:includeFontPadding="false"
+                    android:text="02-10-2023"
+                    android:textColor="@color/light_text"
+                    android:textSize="@dimen/_11ssp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

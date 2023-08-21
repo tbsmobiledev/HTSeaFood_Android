@@ -20,7 +20,7 @@
 
 
     <EditText
-        android:id="@+id/etEmailAddress"
+        android:id="@+id/etUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_15sdp"
@@ -32,7 +32,7 @@
         android:inputType="textEmailAddress"
         android:padding="@dimen/_15sdp"
         android:textColor="@color/dark_text"
-        android:textColorHint="@color/light_text"
+        android:textColorHint="@color/gray"
         android:textSize="@dimen/_12ssp" />
 
     <EditText
@@ -49,7 +49,7 @@
         android:inputType="textPassword"
         android:padding="@dimen/_12sdp"
         android:textColor="@color/dark_text"
-        android:textColorHint="@color/light_text"
+        android:textColorHint="@color/gray"
         android:textSize="@dimen/_12ssp" />
 
 
