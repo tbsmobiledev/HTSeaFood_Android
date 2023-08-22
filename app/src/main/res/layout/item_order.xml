@@ -55,22 +55,21 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sora_bold"
                 android:includeFontPadding="false"
-                android:text="Customer No:"
+                android:text="Order Date:"
                 android:textColor="@color/dark_text"
                 android:textSize="@dimen/_12ssp" />
 
             <TextView
-                android:id="@+id/tvCustNo"
+                android:id="@+id/tvOrderdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_2sdp"
                 android:fontFamily="@font/sora_regular"
                 android:includeFontPadding="false"
-                android:text="000125"
+                android:text="02-10-2023"
                 android:textColor="@color/dark_text"
                 android:textSize="@dimen/_12ssp" />
         </LinearLayout>
-
 
 
         <LinearLayout
@@ -79,28 +78,56 @@
             android:layout_marginTop="@dimen/_1sdp"
             android:orientation="horizontal">
 
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sora_bold"
                 android:includeFontPadding="false"
-                android:text="Customer Name:"
+                android:text="Posting Date:"
                 android:textColor="@color/dark_text"
                 android:textSize="@dimen/_12ssp" />
 
             <TextView
-                android:layout_marginStart="@dimen/_2sdp"
-                android:id="@+id/tvCustName"
+                android:id="@+id/tvPostingdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
+                android:layout_marginStart="@dimen/_2sdp"
                 android:fontFamily="@font/sora_regular"
                 android:includeFontPadding="false"
-                android:maxLines="1"
-                android:text="TEST CUSTOMER - DO NOT USE"
+                android:text="02-10-2023"
                 android:textColor="@color/dark_text"
                 android:textSize="@dimen/_12ssp" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_1sdp"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sora_bold"
+                android:includeFontPadding="false"
+                android:text="Shipment Date:"
+                android:textColor="@color/dark_text"
+                android:textSize="@dimen/_12ssp" />
+
+            <TextView
+                android:id="@+id/tvShipmentdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:fontFamily="@font/sora_regular"
+                android:includeFontPadding="false"
+                android:text="02-10-2023"
+                android:textColor="@color/dark_text"
+                android:textSize="@dimen/_12ssp" />
+        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/llExtraView"
             android:layout_width="match_parent"
@@ -162,6 +189,7 @@
                     android:textColor="@color/light_text"
                     android:textSize="@dimen/_11ssp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -188,6 +216,34 @@
                     android:textColor="@color/light_text"
                     android:textSize="@dimen/_11ssp" />
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sora_regular"
+                    android:includeFontPadding="false"
+                    android:text="County Region Code:"
+                    android:textColor="@color/light_text"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:id="@+id/tvCountyCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:fontFamily="@font/sora_regular"
+                    android:includeFontPadding="false"
+                    android:text="IN"
+                    android:textColor="@color/light_text"
+                    android:textSize="@dimen/_11ssp" />
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -210,88 +266,7 @@
                     android:layout_marginStart="@dimen/_2sdp"
                     android:fontFamily="@font/sora_regular"
                     android:includeFontPadding="false"
-                    android:text="INDIA (IN)"
-                    android:textColor="@color/light_text"
-                    android:textSize="@dimen/_11ssp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_1sdp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/sora_regular"
-                    android:includeFontPadding="false"
-                    android:text="Order Date:"
-                    android:textColor="@color/light_text"
-                    android:textSize="@dimen/_11ssp" />
-
-                <TextView
-                    android:id="@+id/tvOrderdate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_2sdp"
-                    android:fontFamily="@font/sora_regular"
-                    android:includeFontPadding="false"
-                    android:text="02-10-2023"
-                    android:textColor="@color/light_text"
-                    android:textSize="@dimen/_11ssp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_1sdp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/sora_regular"
-                    android:includeFontPadding="false"
-                    android:text="Posting Date:"
-                    android:textColor="@color/light_text"
-                    android:textSize="@dimen/_11ssp" />
-
-                <TextView
-                    android:id="@+id/tvPostingdate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_2sdp"
-                    android:fontFamily="@font/sora_regular"
-                    android:includeFontPadding="false"
-                    android:text="02-10-2023"
-                    android:textColor="@color/light_text"
-                    android:textSize="@dimen/_11ssp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_1sdp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/sora_regular"
-                    android:includeFontPadding="false"
-                    android:text="Shipment Date:"
-                    android:textColor="@color/light_text"
-                    android:textSize="@dimen/_11ssp" />
-
-                <TextView
-                    android:id="@+id/tvShipmentdate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_2sdp"
-                    android:fontFamily="@font/sora_regular"
-                    android:includeFontPadding="false"
-                    android:text="02-10-2023"
+                    android:text="INDIA"
                     android:textColor="@color/light_text"
                     android:textSize="@dimen/_11ssp" />
             </LinearLayout>
