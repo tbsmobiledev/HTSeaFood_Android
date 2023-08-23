@@ -18,6 +18,10 @@
         android:theme="@style/Theme.HTSeaFood"
         tools:targetApi="31">
         <activity
+            android:name=".activity.ShipmentDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.InvoiceDetailActivity"
             android:exported="false"
             android:screenOrientation="portrait" />

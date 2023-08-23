@@ -20,7 +20,7 @@
             android:fontFamily="@font/sora_bold"
             android:includeFontPadding="false"
             android:padding="@dimen/_11sdp"
-            android:text="Invoice ID: #241347"
+            android:text="Shipment ID: #241347"
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="@dimen/_14ssp" />
@@ -165,103 +165,5 @@
             android:visibility="gone" />
     </RelativeLayout>
 
-<!--    <View-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="@dimen/_3sdp"-->
-<!--        android:background="@drawable/gredient_gray" />-->
-
-    <LinearLayout
-        android:elevation="@dimen/_8sdp"
-        android:background="@drawable/shadow_top_background"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingHorizontal="@dimen/_18sdp"
-        android:paddingVertical="@dimen/_10sdp">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_1sdp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/sora_regular"
-                android:includeFontPadding="false"
-                android:text="Amount"
-                android:textColor="@color/light_text"
-                android:textSize="@dimen/_11ssp" />
-
-            <TextView
-                android:id="@+id/tvtotalAmount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginStart="@dimen/_2sdp"
-                android:fontFamily="@font/sora_regular"
-                android:includeFontPadding="false"
-                android:text="$1,980.00"
-                android:textColor="@color/dark_text"
-                android:textSize="@dimen/_11ssp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_2sdp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/sora_regular"
-                android:includeFontPadding="false"
-                android:text="Tax Amount"
-                android:textColor="@color/light_text"
-                android:textSize="@dimen/_11ssp" />
-
-            <TextView
-                android:id="@+id/tvtotalTaxAmount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginStart="@dimen/_2sdp"
-                android:fontFamily="@font/sora_regular"
-                android:includeFontPadding="false"
-                android:text="$0.00"
-                android:textColor="@color/dark_text"
-                android:textSize="@dimen/_11ssp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_2sdp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/sora_regular"
-                android:includeFontPadding="false"
-                android:text="Amount Inc VAT"
-                android:textColor="@color/light_text"
-                android:textSize="@dimen/_11ssp" />
-
-            <TextView
-                android:id="@+id/tvtotalInVatAmount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="@dimen/_2sdp"
-                android:fontFamily="@font/sora_bold"
-                android:includeFontPadding="false"
-                android:text="$1,980.00"
-                android:textColor="@color/dark_text"
-                android:textSize="@dimen/_11ssp" />
-        </RelativeLayout>
-    </LinearLayout>
 
 </LinearLayout>

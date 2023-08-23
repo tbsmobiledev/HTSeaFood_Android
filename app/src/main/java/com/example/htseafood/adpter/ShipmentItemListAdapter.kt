@@ -2,23 +2,21 @@ package com.example.htseafood.adpter
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.htseafood.activity.InvoiceDetailActivity
-import com.example.htseafood.databinding.ItemInvoiceBinding
+import com.example.htseafood.databinding.ItemShipmentItemBinding
 
 
-class InvoiceListAdapter(
+class ShipmentItemListAdapter(
     private val mActivity: Activity,
     private val invoiceList: MutableList<String>?
 ) :
-    RecyclerView.Adapter<InvoiceListAdapter.ViewHolder>() {
+    RecyclerView.Adapter<ShipmentItemListAdapter.ViewHolder>() {
     private val layoutInflater: LayoutInflater = mActivity.layoutInflater
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemInvoiceBinding.inflate(layoutInflater, parent, false)
+        val binding = ItemShipmentItemBinding.inflate(layoutInflater, parent, false)
         return ViewHolder(binding)
     }
 
@@ -35,19 +33,13 @@ class InvoiceListAdapter(
             }
         }
 
-        holder.binding.llInvoice.setOnClickListener {
-            mActivity.startActivity(Intent(mActivity, InvoiceDetailActivity::class.java))
-        }
-
-        holder.binding.tvInvoiceNo.text = "#${position + 1}  Invoice No : 2442774"
-
     }
 
     override fun getItemCount(): Int {
         return invoiceList?.size ?: 0
     }
 
-    class ViewHolder(var binding: ItemInvoiceBinding) : RecyclerView.ViewHolder(
+    class ViewHolder(var binding: ItemShipmentItemBinding) : RecyclerView.ViewHolder(
         binding.root
     )
 }

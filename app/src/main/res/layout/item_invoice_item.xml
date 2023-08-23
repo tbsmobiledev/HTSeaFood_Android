@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/corner_round_box"
         android:orientation="vertical"
-        android:padding="@dimen/_10sdp">
+        android:padding="@dimen/_8sdp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -47,7 +47,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:orientation="horizontal">
 
             <TextView
@@ -72,14 +72,13 @@
         </LinearLayout>
 
 
-
         <LinearLayout
             android:id="@+id/llExtraView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -92,22 +91,104 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sora_regular"
                     android:includeFontPadding="false"
-                    android:text="Amount including VAT:"
+                    android:text="Quantity"
                     android:textColor="@color/light_text"
                     android:textSize="@dimen/_11ssp" />
 
                 <TextView
-                    android:layout_alignParentEnd="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginStart="@dimen/_2sdp"
-                    android:fontFamily="@font/sora_bold"
+                    android:fontFamily="@font/sora_regular"
                     android:includeFontPadding="false"
-                    android:text="$180.00"
+                    android:text="60"
+                    android:textColor="@color/dark_text"
+                    android:textSize="@dimen/_11ssp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sora_regular"
+                    android:includeFontPadding="false"
+                    android:text="Unit of Measure"
+                    android:textColor="@color/light_text"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:fontFamily="@font/sora_regular"
+                    android:includeFontPadding="false"
+                    android:text="Case"
+                    android:textColor="@color/dark_text"
+                    android:textSize="@dimen/_11ssp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sora_regular"
+                    android:includeFontPadding="false"
+                    android:text="Unit Price"
+                    android:textColor="@color/light_text"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:fontFamily="@font/sora_regular"
+                    android:includeFontPadding="false"
+                    android:text="$11.00"
+                    android:textColor="@color/dark_text"
+                    android:textSize="@dimen/_11ssp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sora_regular"
+                    android:includeFontPadding="false"
+                    android:text="Tax Amount"
+                    android:textColor="@color/light_text"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:fontFamily="@font/sora_regular"
+                    android:includeFontPadding="false"
+                    android:text="$0.00"
                     android:textColor="@color/dark_text"
                     android:textSize="@dimen/_11ssp" />
             </RelativeLayout>
         </LinearLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -119,14 +200,14 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sora_regular"
                 android:includeFontPadding="false"
-                android:text="Amount including VAT:"
+                android:text="Amount including VAT"
                 android:textColor="@color/light_text"
                 android:textSize="@dimen/_11ssp" />
 
             <TextView
-                android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 android:layout_marginStart="@dimen/_2sdp"
                 android:fontFamily="@font/sora_bold"
                 android:includeFontPadding="false"

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools">
+<layout>
 
     <data>
 
@@ -20,7 +20,6 @@
 
 
             <TextView
-                android:id="@+id/tvInvoiceNo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -29,7 +28,7 @@
                 android:includeFontPadding="false"
                 android:paddingHorizontal="@dimen/_8sdp"
                 android:paddingVertical="@dimen/_2sdp"
-                tools:text="#1  Invoice No : 2442774"
+                android:text="No 1  : 68005"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_10ssp" />
 
@@ -53,22 +52,22 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/sora_bold"
+                android:fontFamily="@font/sora_semibold"
                 android:includeFontPadding="false"
-                android:text="Amount including VAT:"
+                android:text="Description:"
                 android:textColor="@color/dark_text"
-                android:textSize="@dimen/_12ssp" />
+                android:textSize="@dimen/_11ssp" />
 
             <TextView
-                android:id="@+id/tvCustNo"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_2sdp"
                 android:fontFamily="@font/sora_regular"
                 android:includeFontPadding="false"
-                android:text="$180.00"
+                android:text="BAMBOO CHOPSTICKS/PAPER BAG 60X230 MM 100PRX10BAG"
                 android:textColor="@color/dark_text"
-                android:textSize="@dimen/_12ssp" />
+                android:textSize="@dimen/_11ssp" />
         </LinearLayout>
 
 
@@ -80,10 +79,10 @@
             android:orientation="vertical"
             android:visibility="gone">
 
-
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2sdp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -91,26 +90,26 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sora_regular"
                     android:includeFontPadding="false"
-                    android:text="Address:"
+                    android:text="Quantity"
                     android:textColor="@color/light_text"
                     android:textSize="@dimen/_11ssp" />
 
                 <TextView
-                    android:id="@+id/tvAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginStart="@dimen/_2sdp"
                     android:fontFamily="@font/sora_regular"
                     android:includeFontPadding="false"
-                    android:text="123 fake street"
-                    android:textColor="@color/light_text"
+                    android:text="60"
+                    android:textColor="@color/dark_text"
                     android:textSize="@dimen/_11ssp" />
-            </LinearLayout>
+            </RelativeLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_2sdp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -118,75 +117,50 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sora_regular"
                     android:includeFontPadding="false"
-                    android:text="City:"
+                    android:text="Unit of Measure"
                     android:textColor="@color/light_text"
                     android:textSize="@dimen/_11ssp" />
 
                 <TextView
-                    android:id="@+id/tvCity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_marginStart="@dimen/_2sdp"
                     android:fontFamily="@font/sora_regular"
                     android:includeFontPadding="false"
-                    android:text="SPRINGFIELD"
-                    android:textColor="@color/light_text"
+                    android:text="Case"
+                    android:textColor="@color/dark_text"
                     android:textSize="@dimen/_11ssp" />
-            </LinearLayout>
+            </RelativeLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_1sdp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/sora_regular"
-                    android:includeFontPadding="false"
-                    android:text="Order Date:"
-                    android:textColor="@color/light_text"
-                    android:textSize="@dimen/_11ssp" />
-
-                <TextView
-                    android:id="@+id/tvOrderdate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_2sdp"
-                    android:fontFamily="@font/sora_regular"
-                    android:includeFontPadding="false"
-                    android:text="02-10-2023"
-                    android:textColor="@color/light_text"
-                    android:textSize="@dimen/_11ssp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_1sdp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/sora_regular"
-                    android:includeFontPadding="false"
-                    android:text="Posting Date:"
-                    android:textColor="@color/light_text"
-                    android:textSize="@dimen/_11ssp" />
-
-                <TextView
-                    android:id="@+id/tvPostingdate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_2sdp"
-                    android:fontFamily="@font/sora_regular"
-                    android:includeFontPadding="false"
-                    android:text="02-10-2023"
-                    android:textColor="@color/light_text"
-                    android:textSize="@dimen/_11ssp" />
-            </LinearLayout>
         </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sora_regular"
+                android:includeFontPadding="false"
+                android:text="Unit Price"
+                android:textColor="@color/light_text"
+                android:textSize="@dimen/_11ssp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:fontFamily="@font/sora_bold"
+                android:includeFontPadding="false"
+                android:text="$11.00"
+                android:textColor="@color/dark_text"
+                android:textSize="@dimen/_11ssp" />
+        </RelativeLayout>
+
     </LinearLayout>
 </layout>
