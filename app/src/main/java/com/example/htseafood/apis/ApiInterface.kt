@@ -1,5 +1,6 @@
 package com.example.htseafood.apis
 
+import com.example.htseafood.model.request.InvoiceRequest
 import com.example.htseafood.model.request.LoginRequest
 import com.example.htseafood.utils.Constants
 import com.google.gson.JsonObject
@@ -11,5 +12,8 @@ interface ApiInterface {
 
     @POST(Constants.SIGN_IN)
     fun login(@Body loginRequest: LoginRequest): Call<JsonObject>
+
+    @POST(Constants.INVOICE_LIST)
+    fun invoiceList(@Body invoiceRequest: InvoiceRequest): Call<JsonObject>
 
 }

@@ -9,11 +9,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.htseafood.activity.InvoiceDetailActivity
 import com.example.htseafood.databinding.ItemInvoiceBinding
+import com.example.htseafood.model.responses.ValueItem
 
 
 class InvoiceListAdapter(
     private val mActivity: Activity,
-    private val invoiceList: MutableList<String>?
+    private val invoiceList: MutableList<ValueItem>?
 ) :
     RecyclerView.Adapter<InvoiceListAdapter.ViewHolder>() {
     private val layoutInflater: LayoutInflater = mActivity.layoutInflater
@@ -23,6 +24,7 @@ class InvoiceListAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
+        holder.binding.invoice = invoiceList!![position]
         holder.binding.ivArrow.setOnClickListener {
             if (holder.binding.ivArrow.tag == "0") {
                 holder.binding.ivArrow.tag = "1"
@@ -39,7 +41,8 @@ class InvoiceListAdapter(
             mActivity.startActivity(Intent(mActivity, InvoiceDetailActivity::class.java))
         }
 
-        holder.binding.tvInvoiceNo.text = "#${position + 1}  Invoice No : 2442774"
+        holder.binding.tvInvoiceNo.text =
+            "#${position + 1}  Invoice No : " + invoiceList[position].no
 
     }
 

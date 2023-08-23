@@ -73,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
             Constants.BASE_URL, ""
         )!!.webservices.login(
             LoginRequest(
-                username, password
+                password, username
             )
         ).enqueue(object : Callback<JsonObject> {
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {

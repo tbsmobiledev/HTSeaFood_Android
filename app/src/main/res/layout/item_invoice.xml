@@ -3,6 +3,9 @@
 
     <data>
 
+        <variable
+            name="invoice"
+            type="com.example.htseafood.model.responses.ValueItem" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -29,9 +32,9 @@
                 android:includeFontPadding="false"
                 android:paddingHorizontal="@dimen/_8sdp"
                 android:paddingVertical="@dimen/_2sdp"
-                tools:text="#1  Invoice No : 2442774"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_10ssp" />
+                android:textSize="@dimen/_10ssp"
+                tools:text="#1  Invoice No : 2442774" />
 
             <ImageView
                 android:id="@+id/ivArrow"
@@ -55,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sora_bold"
                 android:includeFontPadding="false"
-                android:text="Amount including VAT:"
+                android:text="@string/amount_including_vat"
                 android:textColor="@color/dark_text"
                 android:textSize="@dimen/_12ssp" />
 
@@ -66,9 +69,10 @@
                 android:layout_marginStart="@dimen/_2sdp"
                 android:fontFamily="@font/sora_regular"
                 android:includeFontPadding="false"
-                android:text="$180.00"
+                android:text="@{invoice.updatedAmountIncludingVAT()}"
                 android:textColor="@color/dark_text"
-                android:textSize="@dimen/_12ssp" />
+                android:textSize="@dimen/_12ssp"
+                tools:text="$180.00" />
         </LinearLayout>
 
 
@@ -91,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sora_regular"
                     android:includeFontPadding="false"
-                    android:text="Address:"
+                    android:text="@string/address"
                     android:textColor="@color/light_text"
                     android:textSize="@dimen/_11ssp" />
 
@@ -102,9 +106,10 @@
                     android:layout_marginStart="@dimen/_2sdp"
                     android:fontFamily="@font/sora_regular"
                     android:includeFontPadding="false"
-                    android:text="123 fake street"
+                    android:text="@{invoice.sellToAddress}"
                     android:textColor="@color/light_text"
-                    android:textSize="@dimen/_11ssp" />
+                    android:textSize="@dimen/_11ssp"
+                    tools:text="123 fake street" />
             </LinearLayout>
 
             <LinearLayout
@@ -118,7 +123,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sora_regular"
                     android:includeFontPadding="false"
-                    android:text="City:"
+                    android:text="@string/city"
                     android:textColor="@color/light_text"
                     android:textSize="@dimen/_11ssp" />
 
@@ -129,9 +134,10 @@
                     android:layout_marginStart="@dimen/_2sdp"
                     android:fontFamily="@font/sora_regular"
                     android:includeFontPadding="false"
-                    android:text="SPRINGFIELD"
+                    android:text="@{invoice.sellToCity}"
                     android:textColor="@color/light_text"
-                    android:textSize="@dimen/_11ssp" />
+                    android:textSize="@dimen/_11ssp"
+                    tools:text="SPRINGFIELD" />
             </LinearLayout>
 
             <LinearLayout
@@ -145,7 +151,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sora_regular"
                     android:includeFontPadding="false"
-                    android:text="Order Date:"
+                    android:text="@string/order_date"
                     android:textColor="@color/light_text"
                     android:textSize="@dimen/_11ssp" />
 
@@ -156,9 +162,10 @@
                     android:layout_marginStart="@dimen/_2sdp"
                     android:fontFamily="@font/sora_regular"
                     android:includeFontPadding="false"
-                    android:text="02-10-2023"
+                    android:text="@{invoice.orderDate}"
                     android:textColor="@color/light_text"
-                    android:textSize="@dimen/_11ssp" />
+                    android:textSize="@dimen/_11ssp"
+                    tools:text="02-10-2023" />
             </LinearLayout>
 
             <LinearLayout
@@ -172,7 +179,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sora_regular"
                     android:includeFontPadding="false"
-                    android:text="Posting Date:"
+                    android:text="@string/posting_date"
                     android:textColor="@color/light_text"
                     android:textSize="@dimen/_11ssp" />
 
@@ -183,9 +190,10 @@
                     android:layout_marginStart="@dimen/_2sdp"
                     android:fontFamily="@font/sora_regular"
                     android:includeFontPadding="false"
-                    android:text="02-10-2023"
+                    android:text="@{invoice.postingDate}"
                     android:textColor="@color/light_text"
-                    android:textSize="@dimen/_11ssp" />
+                    android:textSize="@dimen/_11ssp"
+                    tools:text="02-10-2023" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

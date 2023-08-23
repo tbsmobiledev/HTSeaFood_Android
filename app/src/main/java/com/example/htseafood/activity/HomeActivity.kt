@@ -13,11 +13,17 @@ import com.example.htseafood.R
 import com.example.htseafood.adpter.InvoiceListAdapter
 import com.example.htseafood.adpter.OrderListAdapter
 import com.example.htseafood.adpter.ShipmentListAdapter
+import com.example.htseafood.apis.ApiClient
 import com.example.htseafood.custom.EqualSpacingItemDecoration
+import com.example.htseafood.model.request.InvoiceRequest
+import com.example.htseafood.model.responses.ValueItem
 import com.example.htseafood.utils.Constants
 import com.example.htseafood.utils.ProgressDialog
 import com.example.htseafood.utils.SharedHelper
 import com.example.htseafood.utils.Utils
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_home.ivInvoice
 import kotlinx.android.synthetic.main.activity_home.ivLogout
 import kotlinx.android.synthetic.main.activity_home.ivOrder
@@ -32,6 +38,9 @@ import kotlinx.android.synthetic.main.activity_home.tvNumber
 import kotlinx.android.synthetic.main.activity_home.tvOrder
 import kotlinx.android.synthetic.main.activity_home.tvShipment
 import kotlinx.android.synthetic.main.activity_home.tvTitle
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class HomeActivity : AppCompatActivity() {
     private var totalItemCount = 10
@@ -39,9 +48,11 @@ class HomeActivity : AppCompatActivity() {
     private var orderListAdapter: OrderListAdapter? = null
     private var shipmentListAdapter: ShipmentListAdapter? = null
     var linearLayoutManager: LinearLayoutManager? = null
-    private var itemArrayList = ArrayList<String>()
+    private var itemArrayList = ArrayList<ValueItem>()
+    private var itemArrayList2 = ArrayList<String>()
     var openScreen = "I"
-
+    private val getArray: TypeToken<ArrayList<ValueItem?>?> =
+        object : TypeToken<ArrayList<ValueItem?>?>() {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,29 +77,32 @@ class HomeActivity : AppCompatActivity() {
                 super.onScrolled(recyclerView, dx, dy)
                 val lastVisibleItemPosition = linearLayoutManager!!.findLastVisibleItemPosition()
                 if (lastVisibleItemPosition == totalItemCount - 1) {
+                    totalItemCount += 10
                     when (openScreen) {
                         "I" -> {
-                            invoiceAPI(totalItemCount.toString())
+                            invoiceAPI(totalItemCount / 10)
                         }
 
                         "O" -> {
-                            orderAPI(totalItemCount.toString())
+                            orderAPI(totalItemCount / 10)
                         }
 
                         else -> {
-                            shipmentAPI(totalItemCount.toString())
+                            shipmentAPI(totalItemCount / 10)
                         }
                     }
 
                 }
             }
         })
-        invoiceBindData(Utils.getDummyArrayList(10))
+
+        invoiceAPI(totalItemCount / 10)
 
         llInvoice.setOnClickListener {
             if (openScreen != "I") {
                 openScreen = "I"
                 totalItemCount = 10
+                invoiceAPI(totalItemCount / 10)
                 ivInvoice.setColorFilter(
                     ContextCompat.getColor(this, R.color.blue),
                     android.graphics.PorterDuff.Mode.SRC_IN
@@ -118,7 +132,6 @@ class HomeActivity : AppCompatActivity() {
                 tvTitle.text = getString(R.string.invoice)
 
 
-                invoiceBindData(Utils.getDummyArrayList(10))
             }
         }
 
@@ -223,13 +236,53 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
-    private fun invoiceAPI(value: String) {
+    private fun invoiceAPI(page: Int) {
         if (Utils.isOnline(this)) {
             ProgressDialog.start(this)
-//            val getNotificationAPI = GetNotificationAPI(activity, value, responseListener)
-//            getNotificationAPI.execute()
-            totalItemCount += 10
-            invoiceBindData(Utils.getDummyArrayList(10))
+            ApiClient.getRestClient(
+                Constants.BASE_URL, ""
+            )!!.webservices.invoiceList(
+                InvoiceRequest(
+                    10, SharedHelper.getKey(this, Constants.CustmerNo), page
+                )
+            ).enqueue(object : Callback<JsonObject> {
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                    ProgressDialog.dismiss()
+                    if (response.isSuccessful) {
+                        try {
+                            if (!response.body()!!.get("status").asBoolean) {
+                                Toast.makeText(
+                                    this@HomeActivity,
+                                    "API Failed",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } else {
+                                val list: ArrayList<ValueItem> =
+                                    Gson().fromJson(
+                                        response.body()!!.getAsJsonObject("data")
+                                            .getAsJsonArray("value"),
+                                        getArray.type
+                                    )
+                                if (list.size != 0) {
+                                    invoiceBindData(list)
+                                }
+
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
+                    Toast.makeText(
+                        this@HomeActivity, getString(R.string.api_fail_message), Toast.LENGTH_SHORT
+                    ).show()
+                    ProgressDialog.dismiss()
+                }
+            })
+
+
         } else {
             Toast.makeText(
                 this,
@@ -239,12 +292,12 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun orderAPI(value: String) {
+    private fun orderAPI(page: Int) {
         if (Utils.isOnline(this)) {
             ProgressDialog.start(this)
 //            val getNotificationAPI = GetNotificationAPI(activity, value, responseListener)
 //            getNotificationAPI.execute()
-            totalItemCount += 10
+
             orderBindData(Utils.getDummyArrayList(10))
         } else {
             Toast.makeText(
@@ -256,12 +309,12 @@ class HomeActivity : AppCompatActivity() {
     }
 
 
-    private fun shipmentAPI(value: String) {
+    private fun shipmentAPI(page: Int) {
         if (Utils.isOnline(this)) {
             ProgressDialog.start(this)
 //            val getNotificationAPI = GetNotificationAPI(activity, value, responseListener)
 //            getNotificationAPI.execute()
-            totalItemCount += 10
+
             shipmentBindData(Utils.getDummyArrayList(10))
         } else {
             Toast.makeText(
@@ -273,8 +326,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
 
-    private fun invoiceBindData(arrayList: ArrayList<String>) {
-        ProgressDialog.dismiss()
+    private fun invoiceBindData(arrayList: ArrayList<ValueItem>) {
+
         if (totalItemCount == 10) {
             itemArrayList.clear()
         }
@@ -298,16 +351,16 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun orderBindData(arrayList: ArrayList<String>) {
-        ProgressDialog.dismiss()
+
         if (totalItemCount == 10) {
-            itemArrayList.clear()
+            itemArrayList2.clear()
         }
         if (arrayList.size != 0) {
-            itemArrayList.addAll(arrayList)
+            itemArrayList2.addAll(arrayList)
             rvList!!.visibility = View.VISIBLE
             tvNoDataFound!!.visibility = View.GONE
             if (totalItemCount == 10) {
-                orderListAdapter = OrderListAdapter(this, itemArrayList)
+                orderListAdapter = OrderListAdapter(this, itemArrayList2)
                 rvList!!.adapter = orderListAdapter
 
             } else {
@@ -322,16 +375,16 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun shipmentBindData(arrayList: ArrayList<String>) {
-        ProgressDialog.dismiss()
+
         if (totalItemCount == 10) {
-            itemArrayList.clear()
+            itemArrayList2.clear()
         }
         if (arrayList.size != 0) {
-            itemArrayList.addAll(arrayList)
+            itemArrayList2.addAll(arrayList)
             rvList!!.visibility = View.VISIBLE
             tvNoDataFound!!.visibility = View.GONE
             if (totalItemCount == 10) {
-                shipmentListAdapter = ShipmentListAdapter(this, itemArrayList)
+                shipmentListAdapter = ShipmentListAdapter(this, itemArrayList2)
                 rvList!!.adapter = shipmentListAdapter
 
             } else {

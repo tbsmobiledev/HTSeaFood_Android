@@ -10,4 +10,9 @@
     <string name="please_check_your_internet_connection">Please check your internet connection</string>
     <string name="please_enter_password">Please enter password</string>
     <string name="please_enter_username">Please enter username</string>
+    <string name="amount_including_vat">Amount including VAT:</string>
+    <string name="address">Address:</string>
+    <string name="city">City:</string>
+    <string name="order_date">Order Date:</string>
+    <string name="posting_date">Posting Date:</string>
 </resources>
