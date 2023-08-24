@@ -15,4 +15,16 @@
     <string name="city">City:</string>
     <string name="order_date">Order Date:</string>
     <string name="posting_date">Posting Date:</string>
+    <string name="shipment_date">Shipment Date:</string>
+    <string name="contact">Contact:</string>
+    <string name="county_region_code">County Region Code:</string>
+    <string name="county">County:</string>
+    <string name="h_amp_t_seafood_inc"><![CDATA[H&T Seafood, INC]]></string>
+    <string name="amount">Amount</string>
+    <string name="tax_amount">Tax Amount</string>
+    <string name="amount_including_vat2">Amount Including VAT</string>
+    <string name="description">Description:</string>
+    <string name="quantity">Quantity</string>
+    <string name="unit_of_measure">Unit of Measure</string>
+    <string name="unit_price">Unit Price</string>
 </resources>

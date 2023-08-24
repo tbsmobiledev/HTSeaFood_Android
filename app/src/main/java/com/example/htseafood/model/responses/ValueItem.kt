@@ -39,6 +39,14 @@ data class ValueItem(
 
     @SerializedName("orderDate")
     val orderDate: String? = null,
+    @SerializedName("shipmentDate")
+    val shipmentDate: String? = null,
+    @SerializedName("selltoCounty")
+    val selltoCounty: String? = null,
+    @SerializedName("selltoCountryRegionCode")
+    val selltoCountryRegionCode: String? = null,
+    @SerializedName("selltoContact")
+    val selltoContact: String? = null,
 
     @SerializedName("amountIncludingVAT")
     val amountIncludingVAT: Double? = null

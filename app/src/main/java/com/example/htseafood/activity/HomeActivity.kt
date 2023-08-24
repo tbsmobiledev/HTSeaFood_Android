@@ -15,7 +15,7 @@ import com.example.htseafood.adpter.OrderListAdapter
 import com.example.htseafood.adpter.ShipmentListAdapter
 import com.example.htseafood.apis.ApiClient
 import com.example.htseafood.custom.EqualSpacingItemDecoration
-import com.example.htseafood.model.request.InvoiceRequest
+import com.example.htseafood.model.request.ListRequest
 import com.example.htseafood.model.responses.ValueItem
 import com.example.htseafood.utils.Constants
 import com.example.htseafood.utils.ProgressDialog
@@ -49,7 +49,6 @@ class HomeActivity : AppCompatActivity() {
     private var shipmentListAdapter: ShipmentListAdapter? = null
     var linearLayoutManager: LinearLayoutManager? = null
     private var itemArrayList = ArrayList<ValueItem>()
-    private var itemArrayList2 = ArrayList<String>()
     var openScreen = "I"
     private val getArray: TypeToken<ArrayList<ValueItem?>?> =
         object : TypeToken<ArrayList<ValueItem?>?>() {}
@@ -139,6 +138,7 @@ class HomeActivity : AppCompatActivity() {
             if (openScreen != "O") {
                 openScreen = "O"
                 totalItemCount = 10
+                orderAPI(totalItemCount / 10)
                 ivInvoice.setColorFilter(
                     ContextCompat.getColor(this, R.color.dark_text),
                     android.graphics.PorterDuff.Mode.SRC_IN
@@ -166,7 +166,7 @@ class HomeActivity : AppCompatActivity() {
                 llShipment.background = null
 
                 tvTitle.text = getString(R.string.order)
-                orderBindData(Utils.getDummyArrayList(10))
+
             }
 
         }
@@ -175,6 +175,7 @@ class HomeActivity : AppCompatActivity() {
             if (openScreen != "S") {
                 openScreen = "S"
                 totalItemCount = 10
+                shipmentAPI(totalItemCount / 10)
                 ivInvoice.setColorFilter(
                     ContextCompat.getColor(this, R.color.dark_text),
                     android.graphics.PorterDuff.Mode.SRC_IN
@@ -201,8 +202,6 @@ class HomeActivity : AppCompatActivity() {
                 llShipment.background = ContextCompat.getDrawable(this, R.drawable.gredient_select)
 
                 tvTitle.text = getString(R.string.shipment)
-
-                shipmentBindData(Utils.getDummyArrayList(10))
             }
 
         }
@@ -242,7 +241,7 @@ class HomeActivity : AppCompatActivity() {
             ApiClient.getRestClient(
                 Constants.BASE_URL, ""
             )!!.webservices.invoiceList(
-                InvoiceRequest(
+                ListRequest(
                     10, SharedHelper.getKey(this, Constants.CustmerNo), page
                 )
             ).enqueue(object : Callback<JsonObject> {
@@ -263,9 +262,9 @@ class HomeActivity : AppCompatActivity() {
                                             .getAsJsonArray("value"),
                                         getArray.type
                                     )
-                                if (list.size != 0) {
-                                    invoiceBindData(list)
-                                }
+
+                                invoiceBindData(list)
+
 
                             }
                         } catch (e: Exception) {
@@ -295,10 +294,50 @@ class HomeActivity : AppCompatActivity() {
     private fun orderAPI(page: Int) {
         if (Utils.isOnline(this)) {
             ProgressDialog.start(this)
-//            val getNotificationAPI = GetNotificationAPI(activity, value, responseListener)
-//            getNotificationAPI.execute()
+            ApiClient.getRestClient(
+                Constants.BASE_URL, ""
+            )!!.webservices.orderList(
+                ListRequest(
+                    10, SharedHelper.getKey(this, Constants.CustmerNo), page
+                )
+            ).enqueue(object : Callback<JsonObject> {
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                    ProgressDialog.dismiss()
+                    if (response.isSuccessful) {
+                        try {
+                            if (!response.body()!!.get("status").asBoolean) {
+                                Toast.makeText(
+                                    this@HomeActivity,
+                                    "API Failed",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } else {
+                                val list: ArrayList<ValueItem> =
+                                    Gson().fromJson(
+                                        response.body()!!.getAsJsonObject("data")
+                                            .getAsJsonArray("value"),
+                                        getArray.type
+                                    )
 
-            orderBindData(Utils.getDummyArrayList(10))
+                                orderBindData(list)
+
+
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
+                    Toast.makeText(
+                        this@HomeActivity, getString(R.string.api_fail_message), Toast.LENGTH_SHORT
+                    ).show()
+                    ProgressDialog.dismiss()
+                }
+            })
+
+
         } else {
             Toast.makeText(
                 this,
@@ -312,10 +351,50 @@ class HomeActivity : AppCompatActivity() {
     private fun shipmentAPI(page: Int) {
         if (Utils.isOnline(this)) {
             ProgressDialog.start(this)
-//            val getNotificationAPI = GetNotificationAPI(activity, value, responseListener)
-//            getNotificationAPI.execute()
+            ApiClient.getRestClient(
+                Constants.BASE_URL, ""
+            )!!.webservices.shipmentList(
+                ListRequest(
+                    10, SharedHelper.getKey(this, Constants.CustmerNo), page
+                )
+            ).enqueue(object : Callback<JsonObject> {
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                    ProgressDialog.dismiss()
+                    if (response.isSuccessful) {
+                        try {
+                            if (!response.body()!!.get("status").asBoolean) {
+                                Toast.makeText(
+                                    this@HomeActivity,
+                                    "API Failed",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } else {
+                                val list: ArrayList<ValueItem> =
+                                    Gson().fromJson(
+                                        response.body()!!.getAsJsonObject("data")
+                                            .getAsJsonArray("value"),
+                                        getArray.type
+                                    )
 
-            shipmentBindData(Utils.getDummyArrayList(10))
+                                shipmentBindData(list)
+
+
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
+                    Toast.makeText(
+                        this@HomeActivity, getString(R.string.api_fail_message), Toast.LENGTH_SHORT
+                    ).show()
+                    ProgressDialog.dismiss()
+                }
+            })
+
+
         } else {
             Toast.makeText(
                 this,
@@ -350,17 +429,17 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun orderBindData(arrayList: ArrayList<String>) {
+    private fun orderBindData(arrayList: ArrayList<ValueItem>) {
 
         if (totalItemCount == 10) {
-            itemArrayList2.clear()
+            itemArrayList.clear()
         }
         if (arrayList.size != 0) {
-            itemArrayList2.addAll(arrayList)
+            itemArrayList.addAll(arrayList)
             rvList!!.visibility = View.VISIBLE
             tvNoDataFound!!.visibility = View.GONE
             if (totalItemCount == 10) {
-                orderListAdapter = OrderListAdapter(this, itemArrayList2)
+                orderListAdapter = OrderListAdapter(this, itemArrayList)
                 rvList!!.adapter = orderListAdapter
 
             } else {
@@ -374,17 +453,17 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun shipmentBindData(arrayList: ArrayList<String>) {
+    private fun shipmentBindData(arrayList: ArrayList<ValueItem>) {
 
         if (totalItemCount == 10) {
-            itemArrayList2.clear()
+            itemArrayList.clear()
         }
         if (arrayList.size != 0) {
-            itemArrayList2.addAll(arrayList)
+            itemArrayList.addAll(arrayList)
             rvList!!.visibility = View.VISIBLE
             tvNoDataFound!!.visibility = View.GONE
             if (totalItemCount == 10) {
-                shipmentListAdapter = ShipmentListAdapter(this, itemArrayList2)
+                shipmentListAdapter = ShipmentListAdapter(this, itemArrayList)
                 rvList!!.adapter = shipmentListAdapter
 
             } else {

@@ -38,7 +38,12 @@ class InvoiceListAdapter(
         }
 
         holder.binding.llInvoice.setOnClickListener {
-            mActivity.startActivity(Intent(mActivity, InvoiceDetailActivity::class.java))
+            mActivity.startActivity(
+                Intent(
+                    mActivity,
+                    InvoiceDetailActivity::class.java
+                ).putExtra("id", invoiceList[position].no)
+            )
         }
 
         holder.binding.tvInvoiceNo.text =

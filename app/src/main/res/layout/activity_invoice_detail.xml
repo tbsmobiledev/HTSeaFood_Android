@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -20,10 +20,10 @@
             android:fontFamily="@font/sora_bold"
             android:includeFontPadding="false"
             android:padding="@dimen/_11sdp"
-            android:text="Invoice ID: #241347"
             android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="@dimen/_14ssp" />
+            android:textSize="@dimen/_14ssp"
+            tools:text="Invoice ID: #241347" />
 
 
         <ImageView
@@ -37,7 +37,7 @@
 
 
     <LinearLayout
-
+        android:id="@+id/llView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_10sdp"
@@ -45,7 +45,8 @@
         android:layout_marginBottom="@dimen/_5sdp"
         android:background="@drawable/corner_round_box"
         android:orientation="vertical"
-        android:padding="@dimen/_8sdp">
+        android:padding="@dimen/_8sdp"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="match_parent"
@@ -55,7 +56,7 @@
             android:fontFamily="@font/sora_semibold"
             android:includeFontPadding="false"
             android:padding="@dimen/_10sdp"
-            android:text="H&amp;T Seafood, INC"
+            android:text="@string/h_amp_t_seafood_inc"
             android:textColor="@color/dark_text"
             android:textSize="@dimen/_12ssp" />
 
@@ -71,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sora_regular"
                 android:includeFontPadding="false"
-                android:text="Address:"
+                android:text="@string/address"
                 android:textColor="@color/dark_text"
                 android:textSize="@dimen/_10ssp" />
 
@@ -82,9 +83,9 @@
                 android:layout_marginStart="@dimen/_2sdp"
                 android:fontFamily="@font/sora_regular"
                 android:includeFontPadding="false"
-                android:text="123 fake street"
                 android:textColor="@color/light_text"
-                android:textSize="@dimen/_10ssp" />
+                android:textSize="@dimen/_10ssp"
+                tools:text="123 fake street" />
         </LinearLayout>
 
 
@@ -99,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sora_regular"
                 android:includeFontPadding="false"
-                android:text="Order Date:"
+                android:text="@string/order_date"
                 android:textColor="@color/dark_text"
                 android:textSize="@dimen/_10ssp" />
 
@@ -110,9 +111,9 @@
                 android:layout_marginStart="@dimen/_2sdp"
                 android:fontFamily="@font/sora_regular"
                 android:includeFontPadding="false"
-                android:text="02-10-2023"
                 android:textColor="@color/light_text"
-                android:textSize="@dimen/_10ssp" />
+                android:textSize="@dimen/_10ssp"
+                tools:text="02-10-2023" />
         </LinearLayout>
 
         <LinearLayout
@@ -126,7 +127,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sora_regular"
                 android:includeFontPadding="false"
-                android:text="Posting Date:"
+                android:text="@string/posting_date"
                 android:textColor="@color/dark_text"
                 android:textSize="@dimen/_10ssp" />
 
@@ -137,44 +138,25 @@
                 android:layout_marginStart="@dimen/_2sdp"
                 android:fontFamily="@font/sora_regular"
                 android:includeFontPadding="false"
-                android:text="02-10-2023"
                 android:textColor="@color/light_text"
-                android:textSize="@dimen/_10ssp" />
+                android:textSize="@dimen/_10ssp"
+                tools:text="02-10-2023" />
         </LinearLayout>
     </LinearLayout>
 
-    <RelativeLayout
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/tvNoDataFound"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:fontFamily="@font/sora_bold"
-            android:text="No Records Found"
-            android:textColor="@color/dark_text"
-            android:textSize="@dimen/_18ssp"
-            android:visibility="gone" />
-    </RelativeLayout>
-
-<!--    <View-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="@dimen/_3sdp"-->
-<!--        android:background="@drawable/gredient_gray" />-->
 
     <LinearLayout
-        android:elevation="@dimen/_8sdp"
-        android:background="@drawable/shadow_top_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/shadow_top_background"
+        android:elevation="@dimen/_8sdp"
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/_18sdp"
         android:paddingVertical="@dimen/_10sdp">
@@ -190,7 +172,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sora_regular"
                 android:includeFontPadding="false"
-                android:text="Amount"
+                android:text="@string/amount"
                 android:textColor="@color/light_text"
                 android:textSize="@dimen/_11ssp" />
 
@@ -198,13 +180,13 @@
                 android:id="@+id/tvtotalAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginStart="@dimen/_2sdp"
                 android:fontFamily="@font/sora_regular"
                 android:includeFontPadding="false"
-                android:text="$1,980.00"
                 android:textColor="@color/dark_text"
-                android:textSize="@dimen/_11ssp" />
+                android:textSize="@dimen/_11ssp"
+                tools:text="$1,980.00" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -218,7 +200,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sora_regular"
                 android:includeFontPadding="false"
-                android:text="Tax Amount"
+                android:text="@string/tax_amount"
                 android:textColor="@color/light_text"
                 android:textSize="@dimen/_11ssp" />
 
@@ -226,13 +208,13 @@
                 android:id="@+id/tvtotalTaxAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginStart="@dimen/_2sdp"
                 android:fontFamily="@font/sora_regular"
                 android:includeFontPadding="false"
-                android:text="$0.00"
                 android:textColor="@color/dark_text"
-                android:textSize="@dimen/_11ssp" />
+                android:textSize="@dimen/_11ssp"
+                tools:text="$0.00" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -246,7 +228,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sora_regular"
                 android:includeFontPadding="false"
-                android:text="Amount Inc VAT"
+                android:text="@string/amount_including_vat2"
                 android:textColor="@color/light_text"
                 android:textSize="@dimen/_11ssp" />
 
@@ -258,9 +240,9 @@
                 android:layout_marginStart="@dimen/_2sdp"
                 android:fontFamily="@font/sora_bold"
                 android:includeFontPadding="false"
-                android:text="$1,980.00"
                 android:textColor="@color/dark_text"
-                android:textSize="@dimen/_11ssp" />
+                android:textSize="@dimen/_11ssp"
+                tools:text="$1,980.00" />
         </RelativeLayout>
     </LinearLayout>
 

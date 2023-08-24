@@ -2,7 +2,7 @@ package com.example.htseafood.model.request
 
 import com.google.gson.annotations.SerializedName
 
-data class InvoiceRequest(
+data class ListRequest(
 
 	@SerializedName("per_page")
 	val perPage: Int? = null,

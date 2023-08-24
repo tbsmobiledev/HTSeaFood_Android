@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="shipment"
+            type="com.example.htseafood.model.responses.ValueItem" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -20,6 +22,7 @@
 
 
             <TextView
+                android:id="@+id/tvShipmentNo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -28,7 +31,7 @@
                 android:includeFontPadding="false"
                 android:paddingHorizontal="@dimen/_8sdp"
                 android:paddingVertical="@dimen/_2sdp"
-                android:text="#1  Shipment No : 2442774"
+                tools:text="#1  Shipment No : 2442774"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_10ssp" />
 
@@ -55,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sora_bold"
                 android:includeFontPadding="false"
-                android:text="Order Date:"
+                android:text="@string/order_date"
                 android:textColor="@color/dark_text"
                 android:textSize="@dimen/_12ssp" />
 
@@ -66,7 +69,8 @@
                 android:layout_marginStart="@dimen/_2sdp"
                 android:fontFamily="@font/sora_regular"
                 android:includeFontPadding="false"
-                android:text="02-10-2023"
+                android:text="@{shipment.orderDate}"
+                tools:text="02-10-2023"
                 android:textColor="@color/dark_text"
                 android:textSize="@dimen/_12ssp" />
         </LinearLayout>
@@ -82,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sora_bold"
                 android:includeFontPadding="false"
-                android:text="Posting Date:"
+                android:text="@string/posting_date"
                 android:textColor="@color/dark_text"
                 android:textSize="@dimen/_12ssp" />
 
@@ -93,7 +97,8 @@
                 android:layout_marginStart="@dimen/_2sdp"
                 android:fontFamily="@font/sora_regular"
                 android:includeFontPadding="false"
-                android:text="02-10-2023"
+                android:text="@{shipment.postingDate}"
+                tools:text="02-10-2023"
                 android:textColor="@color/dark_text"
                 android:textSize="@dimen/_12ssp" />
         </LinearLayout>
@@ -117,7 +122,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sora_regular"
                     android:includeFontPadding="false"
-                    android:text="Address:"
+                    android:text="@string/address"
                     android:textColor="@color/light_text"
                     android:textSize="@dimen/_11ssp" />
 
@@ -128,7 +133,8 @@
                     android:layout_marginStart="@dimen/_2sdp"
                     android:fontFamily="@font/sora_regular"
                     android:includeFontPadding="false"
-                    android:text="123 fake street"
+                    android:text="@{shipment.sellToAddress}"
+                    tools:text="123 fake street"
                     android:textColor="@color/light_text"
                     android:textSize="@dimen/_11ssp" />
             </LinearLayout>
@@ -144,7 +150,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sora_regular"
                     android:includeFontPadding="false"
-                    android:text="City:"
+                    android:text="@string/city"
                     android:textColor="@color/light_text"
                     android:textSize="@dimen/_11ssp" />
 
@@ -155,7 +161,7 @@
                     android:layout_marginStart="@dimen/_2sdp"
                     android:fontFamily="@font/sora_regular"
                     android:includeFontPadding="false"
-                    android:text="SPRINGFIELD"
+                    android:text="@{shipment.sellToCity}"
                     android:textColor="@color/light_text"
                     android:textSize="@dimen/_11ssp" />
             </LinearLayout>
