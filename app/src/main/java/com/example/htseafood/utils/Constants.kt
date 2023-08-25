@@ -10,6 +10,7 @@ class Constants {
         const val INVOICE_LIST = "postedsalesinvoice.php"
         const val INVOICE_DETAIL = "postedsalesinvoicedetail.php"
         const val SHIPMENT_LIST = "postedsalesshipment.php"
+        const val SHIPMENT_DETAIL = "postedsalesshipmentdetail.php"
         const val ORDER_LIST = "postedsalesorder.php"
 
         // Constants Key

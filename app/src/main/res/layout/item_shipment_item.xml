@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="detail"
+            type="com.example.htseafood.model.responses.PostedSalesShipmentLinesItem" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -20,6 +22,7 @@
 
 
             <TextView
+                android:id="@+id/tvNo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -28,7 +31,7 @@
                 android:includeFontPadding="false"
                 android:paddingHorizontal="@dimen/_8sdp"
                 android:paddingVertical="@dimen/_2sdp"
-                android:text="No 1  : 68005"
+                tools:text="No 1  : 68005"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_10ssp" />
 
@@ -54,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sora_semibold"
                 android:includeFontPadding="false"
-                android:text="Description:"
+                android:text="@string/description"
                 android:textColor="@color/dark_text"
                 android:textSize="@dimen/_11ssp" />
 
@@ -65,7 +68,8 @@
                 android:layout_marginStart="@dimen/_2sdp"
                 android:fontFamily="@font/sora_regular"
                 android:includeFontPadding="false"
-                android:text="BAMBOO CHOPSTICKS/PAPER BAG 60X230 MM 100PRX10BAG"
+                android:text="@{detail.description}"
+                tools:text="BAMBOO CHOPSTICKS/PAPER BAG 60X230 MM 100PRX10BAG"
                 android:textColor="@color/dark_text"
                 android:textSize="@dimen/_11ssp" />
         </LinearLayout>
@@ -90,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sora_regular"
                     android:includeFontPadding="false"
-                    android:text="Quantity"
+                    android:text="@string/quantity"
                     android:textColor="@color/light_text"
                     android:textSize="@dimen/_11ssp" />
 
@@ -101,7 +105,8 @@
                     android:layout_marginStart="@dimen/_2sdp"
                     android:fontFamily="@font/sora_regular"
                     android:includeFontPadding="false"
-                    android:text="60"
+                    android:text="@{detail.quantity.toString()}"
+                    tools:text="60"
                     android:textColor="@color/dark_text"
                     android:textSize="@dimen/_11ssp" />
             </RelativeLayout>
@@ -117,7 +122,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sora_regular"
                     android:includeFontPadding="false"
-                    android:text="Unit of Measure"
+                    android:text="@string/unit_of_measure"
                     android:textColor="@color/light_text"
                     android:textSize="@dimen/_11ssp" />
 
@@ -128,7 +133,8 @@
                     android:layout_marginStart="@dimen/_2sdp"
                     android:fontFamily="@font/sora_regular"
                     android:includeFontPadding="false"
-                    android:text="Case"
+                    android:text="@{detail.unitOfMeasure}"
+                    tools:text="Case"
                     android:textColor="@color/dark_text"
                     android:textSize="@dimen/_11ssp" />
             </RelativeLayout>
@@ -146,7 +152,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sora_regular"
                 android:includeFontPadding="false"
-                android:text="Unit Price"
+                android:text="@string/unit_price"
                 android:textColor="@color/light_text"
                 android:textSize="@dimen/_11ssp" />
 
@@ -157,7 +163,8 @@
                 android:layout_marginStart="@dimen/_2sdp"
                 android:fontFamily="@font/sora_bold"
                 android:includeFontPadding="false"
-                android:text="$11.00"
+                android:text="@{detail.updatedUnitPrice()}"
+                tools:text="$11.00"
                 android:textColor="@color/dark_text"
                 android:textSize="@dimen/_11ssp" />
         </RelativeLayout>

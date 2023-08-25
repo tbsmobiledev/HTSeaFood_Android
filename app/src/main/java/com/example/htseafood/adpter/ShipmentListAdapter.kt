@@ -38,7 +38,12 @@ class ShipmentListAdapter(
         }
 
         holder.binding.llShipment.setOnClickListener {
-            mActivity.startActivity(Intent(mActivity, ShipmentDetailActivity::class.java))
+            mActivity.startActivity(
+                Intent(
+                    mActivity,
+                    ShipmentDetailActivity::class.java
+                ).putExtra("id", shipmentList[position].no)
+            )
         }
 
         holder.binding.tvShipmentNo.text =

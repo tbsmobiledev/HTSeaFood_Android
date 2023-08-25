@@ -7,11 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.htseafood.databinding.ItemShipmentItemBinding
+import com.example.htseafood.model.responses.PostedSalesShipmentLinesItem
 
 
 class ShipmentItemListAdapter(
     private val mActivity: Activity,
-    private val invoiceList: MutableList<String>?
+    private val shipmentList: MutableList<PostedSalesShipmentLinesItem>?
 ) :
     RecyclerView.Adapter<ShipmentItemListAdapter.ViewHolder>() {
     private val layoutInflater: LayoutInflater = mActivity.layoutInflater
@@ -21,6 +22,7 @@ class ShipmentItemListAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
+        holder.binding.detail = shipmentList!![position]
         holder.binding.ivArrow.setOnClickListener {
             if (holder.binding.ivArrow.tag == "0") {
                 holder.binding.ivArrow.tag = "1"
@@ -33,10 +35,12 @@ class ShipmentItemListAdapter(
             }
         }
 
+        holder.binding.tvNo.text = "No " + (position + 1) + "  : " + shipmentList[position].no
+
     }
 
     override fun getItemCount(): Int {
-        return invoiceList?.size ?: 0
+        return shipmentList?.size ?: 0
     }
 
     class ViewHolder(var binding: ItemShipmentItemBinding) : RecyclerView.ViewHolder(

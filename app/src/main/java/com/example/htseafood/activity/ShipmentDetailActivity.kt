@@ -1,25 +1,41 @@
 package com.example.htseafood.activity
 
 import android.os.Bundle
-import android.window.OnBackInvokedDispatcher
-import androidx.annotation.MainThread
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.htseafood.R
 import com.example.htseafood.adpter.ShipmentItemListAdapter
+import com.example.htseafood.apis.ApiClient
 import com.example.htseafood.custom.EqualSpacingItemDecoration
+import com.example.htseafood.model.request.ShipmentDetailRequest
+import com.example.htseafood.model.responses.ShipmentDetailResponse
+import com.example.htseafood.utils.Constants
+import com.example.htseafood.utils.ProgressDialog
 import com.example.htseafood.utils.Utils
-import kotlinx.android.synthetic.main.activity_shipment_detail.ivBack
-import kotlinx.android.synthetic.main.activity_shipment_detail.rvList
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import kotlinx.android.synthetic.main.activity_shipment_detail.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class ShipmentDetailActivity : AppCompatActivity() {
+    var id = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shipment_detail)
         ivBack.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
+
+        if (intent != null) {
+            id = intent.getStringExtra("id").toString()
+        }
+
+
         rvList.addItemDecoration(
             EqualSpacingItemDecoration(
                 resources.getDimension(com.intuit.sdp.R.dimen._10sdp).toInt(),
@@ -27,8 +43,74 @@ class ShipmentDetailActivity : AppCompatActivity() {
             )
         )
         rvList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        val shipmentItemListAdapter = ShipmentItemListAdapter(this, Utils.getDummyArrayList(8))
-        rvList.adapter = shipmentItemListAdapter
+        detailAPI()
+
+
+    }
+
+    private fun detailAPI() {
+        if (Utils.isOnline(this)) {
+            ProgressDialog.start(this)
+            ApiClient.getRestClient(
+                Constants.BASE_URL, ""
+            )!!.webservices.shipmentDetail(
+                ShipmentDetailRequest(
+                    id
+                )
+            ).enqueue(object : Callback<JsonObject> {
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                    ProgressDialog.dismiss()
+                    if (response.isSuccessful) {
+                        try {
+                            if (!response.body()!!.get("status").asBoolean) {
+                                Toast.makeText(
+                                    this@ShipmentDetailActivity,
+                                    response.body()!!.get("msg").toString().replace('"', ' ')
+                                        .trim(),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } else {
+                                val detailResponse: ShipmentDetailResponse =
+                                    Gson().fromJson(
+                                        response.body()!!.getAsJsonObject("data"),
+                                        ShipmentDetailResponse::class.java
+                                    )
+                                llView.visibility= View.VISIBLE
+                                tvTitle.text = "Shipment ID: #${detailResponse.no}"
+                                tvAddress.text =
+                                    detailResponse.sellToAddress + ", " + detailResponse.sellToCity
+                                tvOrderdate.text = detailResponse.orderDate
+                                tvPostingdate.text = detailResponse.postingDate
+                                if (detailResponse.postedSalesShipmentLines!!.isNotEmpty()) {
+                                    val shipmentItemListAdapter = ShipmentItemListAdapter(this@ShipmentDetailActivity, detailResponse.postedSalesShipmentLines!!)
+                                    rvList.adapter = shipmentItemListAdapter
+                                }
+
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
+                    Toast.makeText(
+                        this@ShipmentDetailActivity,
+                        getString(R.string.api_fail_message),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    ProgressDialog.dismiss()
+                }
+            })
+
+
+        } else {
+            Toast.makeText(
+                this,
+                getString(R.string.please_check_your_internet_connection),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
 
