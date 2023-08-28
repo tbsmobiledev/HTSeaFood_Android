@@ -28,4 +28,6 @@
     <string name="unit_of_measure">Unit of Measure</string>
     <string name="unit_price">Unit Price</string>
     <string name="contact_person">Contact Person:</string>
+    <string name="add_more">Add More</string>
+    <string name="delete">Delete</string>
 </resources>

@@ -11,21 +11,6 @@
         android:layout_height="wrap_content"
         android:background="@color/blue">
 
-
-        <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:fontFamily="@font/sora_bold"
-            android:includeFontPadding="false"
-            android:padding="@dimen/_11sdp"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_14ssp"
-            tools:text="Order ID: #241347" />
-
-
         <ImageView
             android:id="@+id/ivBack"
             android:layout_width="@dimen/_17sdp"
@@ -33,6 +18,40 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/_10sdp"
             android:src="@drawable/back" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/ivBack"
+            android:fontFamily="@font/sora_bold"
+            android:includeFontPadding="false"
+            android:padding="@dimen/_11sdp"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            tools:text="Order ID: #WO557997" />
+
+
+        <ImageView
+            android:id="@+id/ivAdd"
+            android:layout_width="@dimen/_29sdp"
+            android:layout_height="@dimen/_17sdp"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/ivDelete"
+            android:paddingEnd="@dimen/_12sdp"
+            android:src="@drawable/add"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/ivDelete"
+            android:layout_width="@dimen/_27sdp"
+            android:layout_height="@dimen/_17sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:paddingEnd="@dimen/_10sdp"
+            android:src="@drawable/delete" />
     </RelativeLayout>
 
 
@@ -197,5 +216,105 @@
                 android:textSize="@dimen/_10ssp"
                 tools:text="02-10-2023" />
         </LinearLayout>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shadow_top_background"
+        android:elevation="@dimen/_8sdp"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/_18sdp"
+        android:paddingVertical="@dimen/_10sdp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_1sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sora_regular"
+                android:includeFontPadding="false"
+                android:text="@string/amount"
+                android:textColor="@color/light_text"
+                android:textSize="@dimen/_11ssp" />
+
+            <TextView
+                android:id="@+id/tvtotalAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:fontFamily="@font/sora_regular"
+                android:includeFontPadding="false"
+                android:textColor="@color/dark_text"
+                android:textSize="@dimen/_11ssp"
+                tools:text="$1,980.00" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sora_regular"
+                android:includeFontPadding="false"
+                android:text="@string/tax_amount"
+                android:textColor="@color/light_text"
+                android:textSize="@dimen/_11ssp" />
+
+            <TextView
+                android:id="@+id/tvtotalTaxAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:fontFamily="@font/sora_regular"
+                android:includeFontPadding="false"
+                android:textColor="@color/dark_text"
+                android:textSize="@dimen/_11ssp"
+                tools:text="$0.00" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sora_regular"
+                android:includeFontPadding="false"
+                android:text="@string/amount_including_vat2"
+                android:textColor="@color/light_text"
+                android:textSize="@dimen/_11ssp" />
+
+            <TextView
+                android:id="@+id/tvtotalInVatAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:fontFamily="@font/sora_bold"
+                android:includeFontPadding="false"
+                android:textColor="@color/dark_text"
+                android:textSize="@dimen/_11ssp"
+                tools:text="$1,980.00" />
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

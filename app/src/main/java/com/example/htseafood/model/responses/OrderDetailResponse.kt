@@ -55,7 +55,21 @@ data class OrderDetailResponse(
 
     @SerializedName("amountIncludingVAT")
     val amountIncludingVAT: Double? = null
-)
+){
+
+    fun updatedAmount(): String {
+        return "$" + DecimalFormat("0.00").format(totalamount)
+    }
+
+    fun updatedTaxAmount(): String {
+        return "$" + DecimalFormat("0.00").format(taxAmount)
+    }
+
+    fun updatedAmountIncludingVAT(): String {
+        return "$" + DecimalFormat("0.00").format(amountIncludingVAT)
+    }
+}
+
 
 data class SalesOrderLinesItem(
 

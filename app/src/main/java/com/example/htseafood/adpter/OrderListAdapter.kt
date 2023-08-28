@@ -2,19 +2,19 @@ package com.example.htseafood.adpter
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.htseafood.activity.OrderDetailActivity
 import com.example.htseafood.databinding.ItemOrderBinding
+import com.example.htseafood.interfaces.OrderListener
 import com.example.htseafood.model.responses.ValueItem
 
 
 class OrderListAdapter(
     private val mActivity: Activity,
-    private val orderList: MutableList<ValueItem>?
+    private val orderList: MutableList<ValueItem>?,
+    val orderListener: OrderListener
 ) :
     RecyclerView.Adapter<OrderListAdapter.ViewHolder>() {
     private val layoutInflater: LayoutInflater = mActivity.layoutInflater
@@ -38,12 +38,7 @@ class OrderListAdapter(
         }
 
         holder.binding.llOrder.setOnClickListener {
-            mActivity.startActivity(
-                Intent(
-                    mActivity,
-                    OrderDetailActivity::class.java
-                ).putExtra("id", orderList[position].no)
-            )
+            orderListener.openOrder(orderList[position].no.toString())
         }
 
         holder.binding.tvOrderNo.text =

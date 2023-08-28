@@ -1,10 +1,12 @@
 package com.example.htseafood.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +17,7 @@ import com.example.htseafood.adpter.OrderListAdapter
 import com.example.htseafood.adpter.ShipmentListAdapter
 import com.example.htseafood.apis.ApiClient
 import com.example.htseafood.custom.EqualSpacingItemDecoration
+import com.example.htseafood.interfaces.OrderListener
 import com.example.htseafood.model.request.ListRequest
 import com.example.htseafood.model.responses.ValueItem
 import com.example.htseafood.utils.Constants
@@ -43,7 +46,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeActivity : AppCompatActivity() {
+
+class HomeActivity : AppCompatActivity(), OrderListener {
     private var totalItemCount = 10
     private var invoiceListAdapter: InvoiceListAdapter? = null
     private var orderListAdapter: OrderListAdapter? = null
@@ -53,6 +57,14 @@ class HomeActivity : AppCompatActivity() {
     var openScreen = "I"
     private val getArray: TypeToken<ArrayList<ValueItem?>?> =
         object : TypeToken<ArrayList<ValueItem?>?>() {}
+
+    var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                totalItemCount = 10
+                orderAPI(totalItemCount / 10)
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,12 +111,8 @@ class HomeActivity : AppCompatActivity() {
         invoiceAPI(totalItemCount / 10)
 
         ivAdd.setOnClickListener {
-            startActivity(
-                Intent(
-                    this,
-                    OrderDetailActivity::class.java
-                ).putExtra("id", "create")
-            )
+            val intent = Intent(this, OrderDetailActivity::class.java).putExtra("id", "create")
+            resultLauncher.launch(intent)
         }
 
         llInvoice.setOnClickListener {
@@ -455,7 +463,7 @@ class HomeActivity : AppCompatActivity() {
             rvList!!.visibility = View.VISIBLE
             tvNoDataFound!!.visibility = View.GONE
             if (totalItemCount == 10) {
-                orderListAdapter = OrderListAdapter(this, itemArrayList)
+                orderListAdapter = OrderListAdapter(this, itemArrayList, this)
                 rvList!!.adapter = orderListAdapter
 
             } else {
@@ -491,5 +499,11 @@ class HomeActivity : AppCompatActivity() {
                 tvNoDataFound!!.visibility = View.VISIBLE
             }
         }
+    }
+
+    override fun openOrder(orderId: String) {
+        val intent = Intent(this, OrderDetailActivity::class.java).putExtra("id", "create")
+            .putExtra("id", orderId)
+        resultLauncher.launch(intent)
     }
 }

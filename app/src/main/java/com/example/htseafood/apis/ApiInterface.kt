@@ -1,6 +1,8 @@
 package com.example.htseafood.apis
 
 import com.example.htseafood.model.request.AddOrderRequest
+import com.example.htseafood.model.request.DeleteItemRequest
+import com.example.htseafood.model.request.DeleteOrderRequest
 import com.example.htseafood.model.request.InvoiceDetailRequest
 import com.example.htseafood.model.request.ListRequest
 import com.example.htseafood.model.request.LoginRequest
@@ -37,4 +39,10 @@ interface ApiInterface {
 
     @POST(Constants.CREATE_ORDER)
     fun createOrder(@Body addOrderRequest: AddOrderRequest): Call<JsonObject>
+
+    @POST(Constants.DELETE_ORDER)
+    fun deleteOrder(@Body deleteOrderRequest: DeleteOrderRequest): Call<JsonObject>
+
+    @POST(Constants.DELETE_ITEM)
+    fun deleteItem(@Body deleteItemRequest: DeleteItemRequest): Call<JsonObject>
 }
