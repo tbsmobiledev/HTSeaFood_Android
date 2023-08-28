@@ -17,7 +17,7 @@
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
             android:fontFamily="@font/sora_bold"
             android:includeFontPadding="false"
             android:padding="@dimen/_11sdp"
@@ -26,22 +26,33 @@
             android:textColor="@color/white"
             android:textSize="@dimen/_14ssp" />
 
-<!--        <ImageView-->
-<!--            android:id="@+id/ivSearch"-->
-<!--            android:layout_width="@dimen/_17sdp"-->
-<!--            android:layout_height="@dimen/_17sdp"-->
-<!--            android:layout_centerVertical="true"-->
-<!--            android:layout_marginEnd="@dimen/_10sdp"-->
-<!--            android:layout_toStartOf="@+id/ivLogout"-->
-<!--            android:src="@drawable/search" />-->
+        <!--        <ImageView-->
+        <!--            android:id="@+id/ivSearch"-->
+        <!--            android:layout_width="@dimen/_17sdp"-->
+        <!--            android:layout_height="@dimen/_17sdp"-->
+        <!--            android:layout_centerVertical="true"-->
+        <!--            android:layout_marginEnd="@dimen/_10sdp"-->
+        <!--            android:layout_toStartOf="@+id/ivLogout"-->
+        <!--            android:src="@drawable/search" />-->
+
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/ivAdd"
+            android:layout_width="@dimen/_29sdp"
+            android:layout_height="@dimen/_17sdp"
+            android:layout_centerVertical="true"
+            android:paddingEnd="@dimen/_12sdp"
+            android:layout_toStartOf="@+id/ivLogout"
+            android:src="@drawable/add" />
 
         <ImageView
             android:id="@+id/ivLogout"
-            android:layout_width="@dimen/_17sdp"
+            android:layout_width="@dimen/_27sdp"
             android:layout_height="@dimen/_17sdp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
             android:src="@drawable/logout" />
     </RelativeLayout>
 

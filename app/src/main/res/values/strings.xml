@@ -27,4 +27,5 @@
     <string name="quantity">Quantity</string>
     <string name="unit_of_measure">Unit of Measure</string>
     <string name="unit_price">Unit Price</string>
+    <string name="contact_person">Contact Person:</string>
 </resources>

@@ -2,10 +2,12 @@ package com.example.htseafood.adpter
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.htseafood.activity.OrderDetailActivity
 import com.example.htseafood.databinding.ItemOrderBinding
 import com.example.htseafood.model.responses.ValueItem
 
@@ -33,6 +35,15 @@ class OrderListAdapter(
                 holder.binding.llExtraView.visibility = View.GONE
                 holder.binding.ivArrow.rotation = 0f
             }
+        }
+
+        holder.binding.llOrder.setOnClickListener {
+            mActivity.startActivity(
+                Intent(
+                    mActivity,
+                    OrderDetailActivity::class.java
+                ).putExtra("id", orderList[position].no)
+            )
         }
 
         holder.binding.tvOrderNo.text =

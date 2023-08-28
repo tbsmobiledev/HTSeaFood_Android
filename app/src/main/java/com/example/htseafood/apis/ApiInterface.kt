@@ -1,8 +1,10 @@
 package com.example.htseafood.apis
 
+import com.example.htseafood.model.request.AddOrderRequest
 import com.example.htseafood.model.request.InvoiceDetailRequest
 import com.example.htseafood.model.request.ListRequest
 import com.example.htseafood.model.request.LoginRequest
+import com.example.htseafood.model.request.OrderDetailRequest
 import com.example.htseafood.model.request.ShipmentDetailRequest
 import com.example.htseafood.utils.Constants
 import com.google.gson.JsonObject
@@ -29,4 +31,10 @@ interface ApiInterface {
 
     @POST(Constants.SHIPMENT_DETAIL)
     fun shipmentDetail(@Body shipmentDetailRequest: ShipmentDetailRequest): Call<JsonObject>
+
+    @POST(Constants.ORDER_DETAIL)
+    fun orderDetail(@Body orderDetailRequest: OrderDetailRequest): Call<JsonObject>
+
+    @POST(Constants.CREATE_ORDER)
+    fun createOrder(@Body addOrderRequest: AddOrderRequest): Call<JsonObject>
 }

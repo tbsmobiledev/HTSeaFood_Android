@@ -75,7 +75,7 @@ class InvoiceDetailActivity : AppCompatActivity() {
                                         response.body()!!.getAsJsonObject("data"),
                                         InvoiceDetailResponse::class.java
                                     )
-                                llView.visibility= View.VISIBLE
+                                llView.visibility = View.VISIBLE
                                 tvTitle.text = "Invoice ID: #${detailResponse.no}"
                                 tvAddress.text =
                                     detailResponse.sellToAddress + ", " + detailResponse.sellToCity

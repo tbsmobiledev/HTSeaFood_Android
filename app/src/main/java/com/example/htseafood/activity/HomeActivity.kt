@@ -24,6 +24,7 @@ import com.example.htseafood.utils.Utils
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
+import kotlinx.android.synthetic.main.activity_home.ivAdd
 import kotlinx.android.synthetic.main.activity_home.ivInvoice
 import kotlinx.android.synthetic.main.activity_home.ivLogout
 import kotlinx.android.synthetic.main.activity_home.ivOrder
@@ -97,6 +98,15 @@ class HomeActivity : AppCompatActivity() {
 
         invoiceAPI(totalItemCount / 10)
 
+        ivAdd.setOnClickListener {
+            startActivity(
+                Intent(
+                    this,
+                    OrderDetailActivity::class.java
+                ).putExtra("id", "create")
+            )
+        }
+
         llInvoice.setOnClickListener {
             if (openScreen != "I") {
                 openScreen = "I"
@@ -127,6 +137,8 @@ class HomeActivity : AppCompatActivity() {
                 llInvoice.background = ContextCompat.getDrawable(this, R.drawable.gredient_select)
                 llOrder.background = null
                 llShipment.background = null
+
+                ivAdd.visibility = View.GONE
 
                 tvTitle.text = getString(R.string.invoice)
 
@@ -164,8 +176,10 @@ class HomeActivity : AppCompatActivity() {
                 llInvoice.background = null
                 llOrder.background = ContextCompat.getDrawable(this, R.drawable.gredient_select)
                 llShipment.background = null
+                ivAdd.visibility = View.VISIBLE
 
                 tvTitle.text = getString(R.string.order)
+
 
             }
 
@@ -200,6 +214,8 @@ class HomeActivity : AppCompatActivity() {
                 llInvoice.background = null
                 llOrder.background = null
                 llShipment.background = ContextCompat.getDrawable(this, R.drawable.gredient_select)
+
+                ivAdd.visibility = View.GONE
 
                 tvTitle.text = getString(R.string.shipment)
             }
