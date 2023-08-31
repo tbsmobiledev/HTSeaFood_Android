@@ -1,9 +1,11 @@
 package com.example.htseafood.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.htseafood.R
@@ -22,6 +24,7 @@ import com.example.htseafood.utils.SharedHelper
 import com.example.htseafood.utils.Utils
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import kotlinx.android.synthetic.main.activity_order_detail.ivAdd
 import kotlinx.android.synthetic.main.activity_order_detail.tvtotalAmount
 import kotlinx.android.synthetic.main.activity_order_detail.tvtotalInVatAmount
 import kotlinx.android.synthetic.main.activity_order_detail.tvtotalTaxAmount
@@ -41,6 +44,13 @@ import retrofit2.Response
 
 class OrderDetailActivity : AppCompatActivity(), DeleteItemListener {
     var id = ""
+
+    var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+
+            }
+        }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order_detail)
@@ -85,6 +95,11 @@ class OrderDetailActivity : AppCompatActivity(), DeleteItemListener {
             )
         )
         rvList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+        ivAdd.setOnClickListener {
+            val intent = Intent(this, AddOrderItemActivity::class.java).putExtra("orderNo", id)
+            resultLauncher.launch(intent)
+        }
 
 
     }

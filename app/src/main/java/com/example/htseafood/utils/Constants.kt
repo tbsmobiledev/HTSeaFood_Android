@@ -16,6 +16,8 @@ class Constants {
         const val CREATE_ORDER = "createsalesorder.php"
         const val DELETE_ORDER = "deletesalesorder.php"
         const val DELETE_ITEM = "deletesalesorderline.php"
+        const val SEARCH_UPC = "searchdescription.php"
+        const val SEARCH_ITEMNO = "searchitemno.php"
 
         // Constants Key
         const val IS_LOGIN = "is_login"

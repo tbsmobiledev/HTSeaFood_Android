@@ -7,9 +7,11 @@ import com.example.htseafood.model.request.InvoiceDetailRequest
 import com.example.htseafood.model.request.ListRequest
 import com.example.htseafood.model.request.LoginRequest
 import com.example.htseafood.model.request.OrderDetailRequest
+import com.example.htseafood.model.request.SearchOrderRequest
 import com.example.htseafood.model.request.ShipmentDetailRequest
 import com.example.htseafood.utils.Constants
 import com.google.gson.JsonObject
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -45,4 +47,9 @@ interface ApiInterface {
 
     @POST(Constants.DELETE_ITEM)
     fun deleteItem(@Body deleteItemRequest: DeleteItemRequest): Call<JsonObject>
+
+    @POST(Constants.SEARCH_UPC)
+    fun searchItem(
+        @Body searchOrderRequest: SearchOrderRequest
+    ): Call<JsonObject>
 }

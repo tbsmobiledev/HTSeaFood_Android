@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="@dimen/_17sdp"
+            android:layout_height="@dimen/_17sdp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/ivBack"
+            android:fontFamily="@font/sora_bold"
+            android:includeFontPadding="false"
+            android:padding="@dimen/_11sdp"
+            android:text="@string/add_order_item"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        android:background="@drawable/corner_round_box"
+        android:orientation="vertical"
+        android:padding="@dimen/_8sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/et_barcode"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                android:background="@android:color/transparent"
+                android:hint="@string/enter_upc_or_item_no"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:textColor="@color/dark_text"
+                android:textSize="@dimen/_12ssp"
+                android:windowSoftInputMode="stateHidden" />
+
+
+            <ImageView
+                android:id="@+id/iv_clean"
+                android:layout_width="@dimen/_27sdp"
+                android:layout_height="@dimen/_17sdp"
+                android:layout_gravity="center"
+                android:layout_weight="0"
+                android:paddingHorizontal="@dimen/_5sdp"
+                android:src="@drawable/close"
+                android:visibility="invisible" />
+
+
+            <TextView
+                android:id="@+id/tvSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/corner_round_button"
+                android:fontFamily="@font/sora_bold"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:padding="@dimen/_6sdp"
+                android:text="@string/search"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_8ssp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginVertical="@dimen/_5sdp"
+            android:background="@color/gray" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sora_regular"
+                android:includeFontPadding="false"
+                android:text="@string/upc"
+                android:textColor="@color/light_text"
+                android:textSize="@dimen/_11ssp" />
+
+            <TextView
+                android:id="@+id/tvUPC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:fontFamily="@font/sora_regular"
+                android:includeFontPadding="false"
+                android:textColor="@color/dark_text"
+                android:textSize="@dimen/_11ssp"
+                tools:text="59854552214" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginVertical="@dimen/_5sdp"
+            android:background="@color/gray" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sora_regular"
+                android:includeFontPadding="false"
+                android:text="@string/no"
+                android:textColor="@color/light_text"
+                android:textSize="@dimen/_11ssp" />
+
+            <TextView
+                android:id="@+id/tvNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:fontFamily="@font/sora_regular"
+                android:includeFontPadding="false"
+                android:textColor="@color/dark_text"
+                android:textSize="@dimen/_11ssp"
+                tools:text="64068" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginVertical="@dimen/_5sdp"
+            android:background="@color/gray" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sora_regular"
+                android:includeFontPadding="false"
+                android:text="@string/description2"
+                android:textColor="@color/light_text"
+                android:textSize="@dimen/_11ssp" />
+
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_toEndOf="@+id/tvLabel"
+                android:fontFamily="@font/sora_regular"
+                android:gravity="end"
+                android:includeFontPadding="false"
+                android:textColor="@color/dark_text"
+                android:textSize="@dimen/_11ssp"
+                tools:text="LAYER CAKE, COCONUT FLAVOR" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginVertical="@dimen/_5sdp"
+            android:background="@color/gray" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sora_regular"
+                android:includeFontPadding="false"
+                android:text="@string/unit_of_measure"
+                android:textColor="@color/light_text"
+                android:textSize="@dimen/_11ssp" />
+
+            <TextView
+                android:id="@+id/tvUnitofMeasure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:fontFamily="@font/sora_regular"
+                android:includeFontPadding="false"
+                android:textColor="@color/dark_text"
+                android:textSize="@dimen/_11ssp"
+                tools:text="CS" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginVertical="@dimen/_5sdp"
+            android:background="@color/gray" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sora_regular"
+                android:includeFontPadding="false"
+                android:text="@string/unit_price"
+                android:textColor="@color/light_text"
+                android:textSize="@dimen/_11ssp" />
+
+            <TextView
+                android:id="@+id/tvUnitPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:fontFamily="@font/sora_regular"
+                android:includeFontPadding="false"
+                android:textColor="@color/dark_text"
+                android:textSize="@dimen/_11ssp"
+                tools:text="$130.00" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginVertical="@dimen/_5sdp"
+            android:background="@color/gray" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/sora_regular"
+                android:includeFontPadding="false"
+                android:text="@string/order_quantity"
+                android:textColor="@color/light_text"
+                android:textSize="@dimen/_11ssp" />
+
+            <EditText
+                android:id="@+id/evQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:background="@drawable/corner_round_editbox"
+                android:enabled="false"
+                android:fontFamily="@font/sora_semibold"
+                android:gravity="center"
+                android:imeOptions="actionDone"
+                android:includeFontPadding="false"
+                android:inputType="number"
+                android:maxLines="1"
+                android:minEms="4"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingTop="@dimen/_2sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_2sdp"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/_11ssp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@drawable/corner_round_button"
+        android:fontFamily="@font/sora_bold"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:padding="@dimen/_12sdp"
+        android:text="@string/add"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_15ssp"
+        android:visibility="gone" />
+
+</LinearLayout>
