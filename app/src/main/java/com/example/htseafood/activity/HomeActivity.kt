@@ -263,7 +263,7 @@ class HomeActivity : AppCompatActivity(), OrderListener {
         if (Utils.isOnline(this)) {
             ProgressDialog.start(this)
             ApiClient.getRestClient(
-                Constants.BASE_URL, ""
+                Constants.BASE_URL
             )!!.webservices.invoiceList(
                 ListRequest(
                     10, SharedHelper.getKey(this, Constants.CustmerNo), page
@@ -319,7 +319,7 @@ class HomeActivity : AppCompatActivity(), OrderListener {
         if (Utils.isOnline(this)) {
             ProgressDialog.start(this)
             ApiClient.getRestClient(
-                Constants.BASE_URL, ""
+                Constants.BASE_URL
             )!!.webservices.orderList(
                 ListRequest(
                     10, SharedHelper.getKey(this, Constants.CustmerNo), page
@@ -376,7 +376,7 @@ class HomeActivity : AppCompatActivity(), OrderListener {
         if (Utils.isOnline(this)) {
             ProgressDialog.start(this)
             ApiClient.getRestClient(
-                Constants.BASE_URL, ""
+                Constants.BASE_URL
             )!!.webservices.shipmentList(
                 ListRequest(
                     10, SharedHelper.getKey(this, Constants.CustmerNo), page

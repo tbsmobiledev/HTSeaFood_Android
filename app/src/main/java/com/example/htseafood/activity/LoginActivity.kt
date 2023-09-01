@@ -70,7 +70,7 @@ class LoginActivity : AppCompatActivity() {
     fun login(username: String, password: String) {
         ProgressDialog.start(this@LoginActivity)
         ApiClient.getRestClient(
-            Constants.BASE_URL, ""
+            Constants.BASE_URL
         )!!.webservices.login(
             LoginRequest(
                 password, username
@@ -83,7 +83,8 @@ class LoginActivity : AppCompatActivity() {
                         if (!response.body()!!.get("status").asBoolean) {
                             Toast.makeText(
                                 this@LoginActivity,
-                                /*response.body()!!.get("msg").toString().replace('"', ' ').trim()*/"Login Failed",
+                                /*response.body()!!.get("msg").toString().replace('"', ' ').trim()*/
+                                "Login Failed",
                                 Toast.LENGTH_SHORT
                             ).show()
                         } else {

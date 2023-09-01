@@ -8,19 +8,17 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 class ApiClient private constructor(
-    baseURL: String,
-    authCode: String
+    baseURL: String
 ) {
     var webservices: ApiInterface
 
     companion object {
         private var restClient: ApiClient? = null
         fun getRestClient(
-            url: String,
-            authcode: String
+            url: String
         ): ApiClient? {
             try {
-                restClient = ApiClient(url, authcode)
+                restClient = ApiClient(url)
             } catch (e: Exception) {
                 e.printStackTrace()
             }

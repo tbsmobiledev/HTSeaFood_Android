@@ -1,5 +1,6 @@
 package com.example.htseafood.activity
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.htseafood.R
 import com.example.htseafood.adpter.ItemListAdapter
 import com.example.htseafood.apis.ApiClient
+import com.example.htseafood.model.request.AddItemRequest
 import com.example.htseafood.model.request.SearchOrderRequest
 import com.example.htseafood.model.responses.OrderItemResponse
 import com.example.htseafood.utils.Constants
@@ -30,7 +32,8 @@ import kotlinx.android.synthetic.main.activity_add_order_item.iv_clean
 import kotlinx.android.synthetic.main.activity_add_order_item.tvAdd
 import kotlinx.android.synthetic.main.activity_add_order_item.tvDescription
 import kotlinx.android.synthetic.main.activity_add_order_item.tvNo
-import kotlinx.android.synthetic.main.activity_add_order_item.tvSearch
+import kotlinx.android.synthetic.main.activity_add_order_item.tvSearchNo
+import kotlinx.android.synthetic.main.activity_add_order_item.tvSearchUPC
 import kotlinx.android.synthetic.main.activity_add_order_item.tvUPC
 import kotlinx.android.synthetic.main.activity_add_order_item.tvUnitPrice
 import kotlinx.android.synthetic.main.activity_add_order_item.tvUnitofMeasure
@@ -42,10 +45,16 @@ class AddOrderItemActivity : AppCompatActivity() {
     private var itemArrayList = ArrayList<OrderItemResponse>()
     private val getArray: TypeToken<ArrayList<OrderItemResponse?>?> =
         object : TypeToken<ArrayList<OrderItemResponse?>?>() {}
-
+    var orderNo = ""
+    var selectedItemNo = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_order_item)
+
+        if (intent != null) {
+            orderNo = intent.getStringExtra("orderNo").toString()
+        }
+        et_barcode.requestFocus()
 
         et_barcode.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -61,33 +70,98 @@ class AddOrderItemActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable) {}
         })
 
-        et_barcode.setOnEditorActionListener { v: TextView?, actionId: Int, event: KeyEvent? ->
+        tvSearchUPC.setOnClickListener {
             if (et_barcode.text.toString().isEmpty()) {
-                Toast.makeText(this, "Please enter the UPC or Item No", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please enter the UPC", Toast.LENGTH_SHORT).show()
             } else {
-                searchAPI()
+                searchUPCAPI()
             }
             Utils.hideSoftKeyboard(this, et_barcode)
-            true
         }
 
-        tvSearch.setOnClickListener {
+        tvSearchNo.setOnClickListener {
             if (et_barcode.text.toString().isEmpty()) {
-                Toast.makeText(this, "Please enter the UPC or Item No", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please enter Item No", Toast.LENGTH_SHORT).show()
             } else {
-                searchAPI()
+                searchItemNoAPI()
+            }
+            Utils.hideSoftKeyboard(this, et_barcode)
+        }
+
+        tvAdd.setOnClickListener {
+            if (evQuantity.text.toString().isEmpty()) {
+                Toast.makeText(this, "Please enter quantity", Toast.LENGTH_SHORT).show()
+            } else {
+                addQuantity()
             }
             Utils.hideSoftKeyboard(this, et_barcode)
         }
 
     }
 
-    private fun searchAPI() {
+    private fun addQuantity() {
         if (Utils.isOnline(this)) {
             ProgressDialog.start(this)
             ApiClient.getRestClient(
-                Constants.BASE_URL, ""
-            )!!.webservices.searchItem(
+                Constants.BASE_URL
+            )!!.webservices.addItem(
+                AddItemRequest(
+                    orderNo, evQuantity.text.toString(),
+                    selectedItemNo
+                )
+            ).enqueue(object : Callback<JsonObject> {
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                    ProgressDialog.dismiss()
+                    if (response.isSuccessful) {
+                        try {
+                            if (!response.body()!!.get("status").asBoolean) {
+                                Toast.makeText(
+                                    this@AddOrderItemActivity,
+                                    "API Failed",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                emptyData()
+                            } else {
+                                val resultIntent = Intent()
+                                setResult(RESULT_OK, resultIntent)
+                                finish()
+
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
+                    emptyData()
+                    Toast.makeText(
+                        this@AddOrderItemActivity,
+                        getString(R.string.api_fail_message),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    ProgressDialog.dismiss()
+                }
+            })
+
+
+        } else {
+            Toast.makeText(
+                this,
+                getString(R.string.please_check_your_internet_connection),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
+
+    }
+
+    private fun searchItemNoAPI() {
+        if (Utils.isOnline(this)) {
+            ProgressDialog.start(this)
+            ApiClient.getRestClient(
+                Constants.BASE_URL
+            )!!.webservices.searchItemNo(
                 SearchOrderRequest(
                     et_barcode.text.toString().trim()
                 )
@@ -115,7 +189,84 @@ class AddOrderItemActivity : AppCompatActivity() {
                                         emptyData()
                                         Toast.makeText(
                                             this@AddOrderItemActivity,
-                                            "Please enter correct UPC or Item No",
+                                            "Please enter correct Item No",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+
+                                    1 -> {
+                                        setData(itemArrayList[0])
+                                    }
+
+                                    else -> {
+                                        openDialog(itemArrayList)
+                                    }
+                                }
+
+
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
+                    emptyData()
+                    Toast.makeText(
+                        this@AddOrderItemActivity,
+                        getString(R.string.api_fail_message),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    ProgressDialog.dismiss()
+                }
+            })
+
+
+        } else {
+            Toast.makeText(
+                this,
+                getString(R.string.please_check_your_internet_connection),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
+    }
+
+    private fun searchUPCAPI() {
+        if (Utils.isOnline(this)) {
+            ProgressDialog.start(this)
+            ApiClient.getRestClient(
+                Constants.BASE_URL
+            )!!.webservices.searchUPC(
+                SearchOrderRequest(
+                    et_barcode.text.toString().trim()
+                )
+            ).enqueue(object : Callback<JsonObject> {
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                    ProgressDialog.dismiss()
+                    if (response.isSuccessful) {
+                        try {
+                            if (!response.body()!!.get("status").asBoolean) {
+                                Toast.makeText(
+                                    this@AddOrderItemActivity,
+                                    "API Failed",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                emptyData()
+                            } else {
+                                itemArrayList =
+                                    Gson().fromJson(
+                                        response.body()!!.getAsJsonObject("data")
+                                            .getAsJsonArray("value"),
+                                        getArray.type
+                                    )
+                                when (itemArrayList.size) {
+                                    0 -> {
+                                        emptyData()
+                                        Toast.makeText(
+                                            this@AddOrderItemActivity,
+                                            "Please enter correct UPC",
                                             Toast.LENGTH_SHORT
                                         ).show()
                                     }
@@ -200,6 +351,8 @@ class AddOrderItemActivity : AppCompatActivity() {
         evQuantity.setText("")
         evQuantity.isEnabled = true
         tvAdd.visibility = View.VISIBLE
+        evQuantity.requestFocus()
+        selectedItemNo = item.no.toString()
     }
 
     private fun emptyData() {

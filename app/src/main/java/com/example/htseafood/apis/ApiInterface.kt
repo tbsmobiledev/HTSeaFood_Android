@@ -1,5 +1,6 @@
 package com.example.htseafood.apis
 
+import com.example.htseafood.model.request.AddItemRequest
 import com.example.htseafood.model.request.AddOrderRequest
 import com.example.htseafood.model.request.DeleteItemRequest
 import com.example.htseafood.model.request.DeleteOrderRequest
@@ -49,7 +50,11 @@ interface ApiInterface {
     fun deleteItem(@Body deleteItemRequest: DeleteItemRequest): Call<JsonObject>
 
     @POST(Constants.SEARCH_UPC)
-    fun searchItem(
-        @Body searchOrderRequest: SearchOrderRequest
-    ): Call<JsonObject>
+    fun searchUPC(@Body searchOrderRequest: SearchOrderRequest): Call<JsonObject>
+
+    @POST(Constants.SEARCH_ITEMNO)
+    fun searchItemNo(@Body searchOrderRequest: SearchOrderRequest): Call<JsonObject>
+
+    @POST(Constants.ADD_ITEM)
+    fun addItem(@Body addItemRequest: AddItemRequest): Call<JsonObject>
 }

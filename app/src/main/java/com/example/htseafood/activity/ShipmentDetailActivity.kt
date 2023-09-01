@@ -52,7 +52,7 @@ class ShipmentDetailActivity : AppCompatActivity() {
         if (Utils.isOnline(this)) {
             ProgressDialog.start(this)
             ApiClient.getRestClient(
-                Constants.BASE_URL, ""
+                Constants.BASE_URL
             )!!.webservices.shipmentDetail(
                 ShipmentDetailRequest(
                     id

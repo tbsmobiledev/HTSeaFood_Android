@@ -48,7 +48,7 @@ class OrderDetailActivity : AppCompatActivity(), DeleteItemListener {
     var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-
+                detailAPI()
             }
         }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -108,7 +108,7 @@ class OrderDetailActivity : AppCompatActivity(), DeleteItemListener {
         if (Utils.isOnline(this)) {
             ProgressDialog.start(this)
             ApiClient.getRestClient(
-                Constants.BASE_URL, ""
+                Constants.BASE_URL
             )!!.webservices.deleteOrder(
                 DeleteOrderRequest(
                     id
@@ -167,7 +167,7 @@ class OrderDetailActivity : AppCompatActivity(), DeleteItemListener {
         if (Utils.isOnline(this)) {
             ProgressDialog.start(this)
             ApiClient.getRestClient(
-                Constants.BASE_URL, ""
+                Constants.BASE_URL
             )!!.webservices.createOrder(
                 AddOrderRequest(
                     SharedHelper.getKey(this, Constants.CustmerNo)
@@ -219,7 +219,7 @@ class OrderDetailActivity : AppCompatActivity(), DeleteItemListener {
         if (Utils.isOnline(this)) {
             ProgressDialog.start(this)
             ApiClient.getRestClient(
-                Constants.BASE_URL, ""
+                Constants.BASE_URL
             )!!.webservices.orderDetail(
                 OrderDetailRequest(
                     id
@@ -296,7 +296,7 @@ class OrderDetailActivity : AppCompatActivity(), DeleteItemListener {
         if (Utils.isOnline(this)) {
             ProgressDialog.start(this)
             ApiClient.getRestClient(
-                Constants.BASE_URL, ""
+                Constants.BASE_URL
             )!!.webservices.deleteItem(
                 DeleteItemRequest(
                     id, lineNo
