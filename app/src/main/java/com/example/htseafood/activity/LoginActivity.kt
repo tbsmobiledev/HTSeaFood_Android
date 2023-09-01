@@ -100,6 +100,12 @@ class LoginActivity : AppCompatActivity() {
                                     .toString().replace('"', ' ').trim()
                             )
                             SharedHelper.putKey(
+                                this@LoginActivity,
+                                Constants.CustmerName,
+                                response.body()!!.getAsJsonObject("data").get("customerName")
+                                    .toString().replace('"', ' ').trim()
+                            )
+                            SharedHelper.putKey(
                                 this@LoginActivity, Constants.IS_LOGIN, true
                             )
 

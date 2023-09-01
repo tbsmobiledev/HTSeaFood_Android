@@ -114,11 +114,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_2sdp"
-                android:ellipsize="end"
                 android:fontFamily="@font/sora_regular"
                 android:includeFontPadding="false"
-                android:maxLines="1"
-                android:text="SYSCO ASIAN FOODS, INC."
+                tools:text="SYSCO ASIAN FOODS, INC."
                 android:textColor="@color/dark_text"
                 android:textSize="@dimen/_12ssp" />
         </LinearLayout>

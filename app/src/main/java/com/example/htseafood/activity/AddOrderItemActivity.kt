@@ -37,6 +37,7 @@ import kotlinx.android.synthetic.main.activity_add_order_item.tvSearchUPC
 import kotlinx.android.synthetic.main.activity_add_order_item.tvUPC
 import kotlinx.android.synthetic.main.activity_add_order_item.tvUnitPrice
 import kotlinx.android.synthetic.main.activity_add_order_item.tvUnitofMeasure
+import kotlinx.android.synthetic.main.activity_add_order_item.ivBack
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -51,6 +52,9 @@ class AddOrderItemActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_order_item)
 
+        ivBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
         if (intent != null) {
             orderNo = intent.getStringExtra("orderNo").toString()
         }

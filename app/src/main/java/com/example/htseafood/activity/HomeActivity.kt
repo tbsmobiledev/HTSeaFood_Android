@@ -36,6 +36,7 @@ import kotlinx.android.synthetic.main.activity_home.llInvoice
 import kotlinx.android.synthetic.main.activity_home.llOrder
 import kotlinx.android.synthetic.main.activity_home.llShipment
 import kotlinx.android.synthetic.main.activity_home.rvList
+import kotlinx.android.synthetic.main.activity_home.tvCustName
 import kotlinx.android.synthetic.main.activity_home.tvInvoice
 import kotlinx.android.synthetic.main.activity_home.tvNoDataFound
 import kotlinx.android.synthetic.main.activity_home.tvNumber
@@ -72,6 +73,7 @@ class HomeActivity : AppCompatActivity(), OrderListener {
 
 
         tvNumber.text = SharedHelper.getKey(this, Constants.CustmerNo)
+        tvCustName.text=SharedHelper.getKey(this, Constants.CustmerName)
 
 
         rvList.addItemDecoration(

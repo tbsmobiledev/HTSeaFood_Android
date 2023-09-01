@@ -10,6 +10,7 @@ import com.example.htseafood.model.request.LoginRequest
 import com.example.htseafood.model.request.OrderDetailRequest
 import com.example.htseafood.model.request.SearchOrderRequest
 import com.example.htseafood.model.request.ShipmentDetailRequest
+import com.example.htseafood.model.request.UpdateItemRequest
 import com.example.htseafood.utils.Constants
 import com.google.gson.JsonObject
 import okhttp3.ResponseBody
@@ -57,4 +58,7 @@ interface ApiInterface {
 
     @POST(Constants.ADD_ITEM)
     fun addItem(@Body addItemRequest: AddItemRequest): Call<JsonObject>
+
+    @POST(Constants.UPDATE_ITEM)
+    fun updateItemQty(@Body updateItemRequest: UpdateItemRequest): Call<JsonObject>
 }

@@ -8,13 +8,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.htseafood.databinding.ItemOrderItemBinding
 import com.example.htseafood.interfaces.DeleteItemListener
+import com.example.htseafood.interfaces.EditListener
 import com.example.htseafood.model.responses.SalesOrderLinesItem
 
 
 class OrderItemListAdapter(
     private val mActivity: Activity,
     private val orderList: MutableList<SalesOrderLinesItem>?,
-    val deleteItemListener: DeleteItemListener
+    val deleteItemListener: DeleteItemListener,
+    val editListener: EditListener
 ) :
     RecyclerView.Adapter<OrderItemListAdapter.ViewHolder>() {
     private val layoutInflater: LayoutInflater = mActivity.layoutInflater
@@ -41,6 +43,10 @@ class OrderItemListAdapter(
 
         holder.binding.tvNo.text = "No : " + orderList[position].itemNo2
         holder.binding.tvUPCNo.text = "UPC : " + orderList[position].uPC
+
+        holder.binding.tvEdit.setOnClickListener {
+            editListener.editQty(orderList[position])
+        }
 
         holder.binding.tvDelete.setOnClickListener {
             val builder = android.app.AlertDialog.Builder(mActivity)
