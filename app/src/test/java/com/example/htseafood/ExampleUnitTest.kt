@@ -1,4 +1,4 @@
-package com.example.htseafood
+package com.htseafood.customer
 
 import org.junit.Test
 

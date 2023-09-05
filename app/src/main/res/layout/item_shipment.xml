@@ -4,7 +4,7 @@
     <data>
         <variable
             name="shipment"
-            type="com.example.htseafood.model.responses.ValueItem" />
+            type="com.htseafood.customer.model.responses.ValueItem" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

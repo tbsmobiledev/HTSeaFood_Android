@@ -4,11 +4,11 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'org.jetbrains.kotlin.android.extensions'
 
 android {
-    namespace 'com.example.htseafood'
+    namespace 'com.htseafood.customer'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.htseafood"
+        applicationId "com.htseafood.customer"
         minSdk 24
         targetSdk 33
         versionCode 1
