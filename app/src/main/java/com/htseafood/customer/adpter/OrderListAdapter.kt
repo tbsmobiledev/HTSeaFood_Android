@@ -41,8 +41,7 @@ class OrderListAdapter(
             orderListener.openOrder(orderList[position].no.toString())
         }
 
-        holder.binding.tvOrderNo.text =
-            "${position + 1}.  Order No : #" + orderList[position].no
+        holder.binding.tvOrderNo.text = "Order No : #" + orderList[position].no
     }
 
     override fun getItemCount(): Int {

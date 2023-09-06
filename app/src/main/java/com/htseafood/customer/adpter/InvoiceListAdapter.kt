@@ -46,8 +46,7 @@ class InvoiceListAdapter(
             )
         }
 
-        holder.binding.tvInvoiceNo.text =
-            "${position + 1}.  Invoice No : #" + invoiceList[position].no
+        holder.binding.tvInvoiceNo.text = "Invoice No : #" + invoiceList[position].no
 
     }
 

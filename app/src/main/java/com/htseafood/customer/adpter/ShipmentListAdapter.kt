@@ -46,8 +46,7 @@ class ShipmentListAdapter(
             )
         }
 
-        holder.binding.tvShipmentNo.text =
-            "${position + 1}.  Shipment No : #" + shipmentList[position].no
+        holder.binding.tvShipmentNo.text = "Shipment No : #" + shipmentList[position].no
 
     }
 

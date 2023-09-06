@@ -9,6 +9,8 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import android.window.OnBackInvokedDispatcher
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -53,6 +55,7 @@ import retrofit2.Response
 
 class OrderDetailActivity : AppCompatActivity(), DeleteItemListener, EditListener {
     var id = ""
+    var isrefresh = false
 
     var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -61,19 +64,32 @@ class OrderDetailActivity : AppCompatActivity(), DeleteItemListener, EditListene
             }
         }
 
+    override fun onBackPressed() {
+        if (isrefresh) {
+            val resultIntent = Intent()
+            setResult(RESULT_OK, resultIntent)
+            finish()
+        } else {
+            onBackPressedDispatcher.onBackPressed()
+        }
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order_detail)
 
         ivBack.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
+            onBackPressed()
         }
 
         if (intent != null) {
             id = intent.getStringExtra("id").toString()
             if (id == "create") {
+                isrefresh = true
                 createOrderAPI()
             } else {
+                isrefresh = false
                 detailAPI()
             }
         }
@@ -411,7 +427,7 @@ class OrderDetailActivity : AppCompatActivity(), DeleteItemListener, EditListene
                 Constants.BASE_URL
             )!!.webservices.updateItemQty(
                 UpdateItemRequest(
-                    id, lineNo.toString(),qty
+                    id, lineNo.toString(), qty
                 )
             ).enqueue(object : Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
