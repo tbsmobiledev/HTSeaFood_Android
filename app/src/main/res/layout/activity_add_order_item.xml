@@ -74,21 +74,7 @@
                 android:src="@drawable/close"
                 android:visibility="invisible" />
 
-            <TextView
-                android:id="@+id/tvSearchUPC"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginEnd="@dimen/_5sdp"
-                android:background="@drawable/corner_round_button"
-                android:fontFamily="@font/sora_bold"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:padding="@dimen/_6sdp"
-                android:text="Search\nUPC"
-                android:textAllCaps="true"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_8ssp" />
+
 
 
             <TextView
@@ -101,7 +87,7 @@
                 android:gravity="center"
                 android:includeFontPadding="false"
                 android:padding="@dimen/_6sdp"
-                android:text="Search\nITEM NO"
+                android:text="Search"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_8ssp" />

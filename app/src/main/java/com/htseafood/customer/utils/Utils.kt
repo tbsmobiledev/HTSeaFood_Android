@@ -16,7 +16,7 @@ import java.util.*
 @SuppressLint("SimpleDateFormat")
 object Utils {
     var mLastClickTime: Long = 0
-  
+
 
     fun getDummyArrayList(counter: Int): ArrayList<String> {
         val stringArrayList =
@@ -90,7 +90,6 @@ object Utils {
     }
 
 
-
     fun isOnline(context: Context): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -106,11 +105,6 @@ object Utils {
             else -> false
         }
     }
-
-
- 
-
-
 
 
     fun isValidEmail(target: CharSequence?): Boolean {
