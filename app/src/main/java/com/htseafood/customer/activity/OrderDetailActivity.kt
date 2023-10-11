@@ -1,20 +1,24 @@
 package com.htseafood.customer.activity
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import android.window.OnBackInvokedDispatcher
-import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.htseafood.customer.R
 import com.htseafood.customer.adpter.OrderItemListAdapter
 import com.htseafood.customer.apis.ApiClient
@@ -32,9 +36,6 @@ import com.htseafood.customer.utils.Constants
 import com.htseafood.customer.utils.ProgressDialog
 import com.htseafood.customer.utils.SharedHelper
 import com.htseafood.customer.utils.Utils
-import com.google.gson.Gson
-import com.google.gson.JsonObject
-import kotlinx.android.synthetic.main.activity_add_order_item.evQuantity
 import kotlinx.android.synthetic.main.activity_order_detail.ivAdd
 import kotlinx.android.synthetic.main.activity_order_detail.ivBack
 import kotlinx.android.synthetic.main.activity_order_detail.ivDelete
@@ -56,6 +57,7 @@ import retrofit2.Response
 class OrderDetailActivity : AppCompatActivity(), DeleteItemListener, EditListener {
     var id = ""
     var isrefresh = false
+    var detailResponse: OrderDetailResponse? = null
 
     var resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -124,6 +126,7 @@ class OrderDetailActivity : AppCompatActivity(), DeleteItemListener, EditListene
 
         ivAdd.setOnClickListener {
             val intent = Intent(this, AddOrderItemActivity::class.java).putExtra("orderNo", id)
+                .putExtra("orderData", Gson().toJson(detailResponse!!.salesOrderLines))
             resultLauncher.launch(intent)
         }
 
@@ -263,23 +266,23 @@ class OrderDetailActivity : AppCompatActivity(), DeleteItemListener, EditListene
                                     Toast.LENGTH_SHORT
                                 ).show()
                             } else {
-                                val detailResponse: OrderDetailResponse =
+                                detailResponse =
                                     Gson().fromJson(
                                         response.body()!!.getAsJsonObject("data"),
                                         OrderDetailResponse::class.java
                                     )
                                 llView.visibility = View.VISIBLE
-                                tvTitle.text = "Order ID: #${detailResponse.no}"
-                                tvContactPerson.text = detailResponse.selltoContact
+                                tvTitle.text = "Order ID: #${detailResponse!!.no}"
+                                tvContactPerson.text = detailResponse!!.selltoContact
                                 tvAddress.text =
-                                    detailResponse.sellToAddress + ", " + detailResponse.sellToCity
-                                tvOrderdate.text = detailResponse.orderDate
-                                tvPostingdate.text = detailResponse.postingDate
-                                tvShipingdate.text = detailResponse.shipmentDate
-                                if (detailResponse.salesOrderLines!!.isNotEmpty()) {
+                                    detailResponse!!.sellToAddress + ", " + detailResponse!!.sellToCity
+                                tvOrderdate.text = detailResponse!!.orderDate
+                                tvPostingdate.text = detailResponse!!.postingDate
+                                tvShipingdate.text = detailResponse!!.shipmentDate
+                                if (detailResponse!!.salesOrderLines!!.isNotEmpty()) {
                                     val orderItemListAdapter = OrderItemListAdapter(
                                         this@OrderDetailActivity,
-                                        detailResponse.salesOrderLines,
+                                        detailResponse!!.salesOrderLines,
                                         this@OrderDetailActivity,
                                         this@OrderDetailActivity
                                     )
@@ -289,9 +292,10 @@ class OrderDetailActivity : AppCompatActivity(), DeleteItemListener, EditListene
                                     rvList.visibility = View.INVISIBLE
                                 }
 
-                                tvtotalAmount.text = detailResponse.updatedAmount()
-                                tvtotalTaxAmount.text = detailResponse.updatedTaxAmount()
-                                tvtotalInVatAmount.text = detailResponse.updatedAmountIncludingVAT()
+                                tvtotalAmount.text = detailResponse!!.updatedAmount()
+                                tvtotalTaxAmount.text = detailResponse!!.updatedTaxAmount()
+                                tvtotalInVatAmount.text =
+                                    detailResponse!!.updatedAmountIncludingVAT()
 
                             }
                         } catch (e: Exception) {
@@ -404,6 +408,12 @@ class OrderDetailActivity : AppCompatActivity(), DeleteItemListener, EditListene
         tvUnitPrice.text = salesOrderLinesItem.updatedUnitPrice()
         evQuantity.setText(salesOrderLinesItem.quantity.toString())
         evQuantity.requestFocus()
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(evQuantity, InputMethodManager.SHOW_IMPLICIT)
+
+        }, 500)
 
 
         tvCancel.setOnClickListener { view: View? -> dialog.dismiss() }

@@ -24,8 +24,11 @@ import com.htseafood.customer.R
 import com.htseafood.customer.adpter.ItemListAdapter
 import com.htseafood.customer.apis.ApiClient
 import com.htseafood.customer.model.request.AddItemRequest
+import com.htseafood.customer.model.request.DeleteItemRequest
 import com.htseafood.customer.model.request.SearchOrderRequest
+import com.htseafood.customer.model.request.UpdateItemRequest
 import com.htseafood.customer.model.responses.OrderItemResponse
+import com.htseafood.customer.model.responses.SalesOrderLinesItem
 import com.htseafood.customer.utils.Constants
 import com.htseafood.customer.utils.ProgressDialog
 import com.htseafood.customer.utils.Utils
@@ -33,8 +36,11 @@ import kotlinx.android.synthetic.main.activity_add_order_item.et_barcode
 import kotlinx.android.synthetic.main.activity_add_order_item.evQuantity
 import kotlinx.android.synthetic.main.activity_add_order_item.ivBack
 import kotlinx.android.synthetic.main.activity_add_order_item.iv_clean
+import kotlinx.android.synthetic.main.activity_add_order_item.llEditDelete
 import kotlinx.android.synthetic.main.activity_add_order_item.tvAdd
+import kotlinx.android.synthetic.main.activity_add_order_item.tvDelete
 import kotlinx.android.synthetic.main.activity_add_order_item.tvDescription
+import kotlinx.android.synthetic.main.activity_add_order_item.tvEdit
 import kotlinx.android.synthetic.main.activity_add_order_item.tvNo
 import kotlinx.android.synthetic.main.activity_add_order_item.tvSearchNo
 import kotlinx.android.synthetic.main.activity_add_order_item.tvUPC
@@ -48,6 +54,10 @@ class AddOrderItemActivity : AppCompatActivity() {
     private var itemArrayList = ArrayList<OrderItemResponse>()
     private val getArray: TypeToken<ArrayList<OrderItemResponse?>?> =
         object : TypeToken<ArrayList<OrderItemResponse?>?>() {}
+    private val getOrder: TypeToken<ArrayList<SalesOrderLinesItem?>?> =
+        object : TypeToken<ArrayList<SalesOrderLinesItem?>?>() {}
+    private var orderArrayList = ArrayList<SalesOrderLinesItem>()
+    var foundItem: SalesOrderLinesItem? = null
     var orderNo = ""
     var selectedItemNo = ""
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,6 +69,8 @@ class AddOrderItemActivity : AppCompatActivity() {
         }
         if (intent != null) {
             orderNo = intent.getStringExtra("orderNo").toString()
+            orderArrayList =
+                Gson().fromJson(intent.getStringExtra("orderData").toString(), getOrder.type)
         }
         et_barcode.requestFocus()
 
@@ -104,6 +116,30 @@ class AddOrderItemActivity : AppCompatActivity() {
             Utils.hideSoftKeyboard(this, et_barcode)
         }
 
+        tvEdit.setOnClickListener {
+            updateOrder(foundItem!!.lineNo, evQuantity.text.toString())
+        }
+
+        tvDelete.setOnClickListener {
+            val builder = android.app.AlertDialog.Builder(this)
+            builder.setTitle("Delete Order Item")
+            builder.setMessage("Are you sure you want to delete this order item?")
+
+            //performing positive action
+            builder.setPositiveButton("Yes") { dialogInterface, which ->
+                builder.setCancelable(true)
+                deleteOrderItem(foundItem!!.lineNo.toString())
+            }
+
+            //performing negative action
+            builder.setNegativeButton("No") { dialogInterface, which ->
+                builder.setCancelable(true)
+            }
+
+            builder.setCancelable(false)
+            builder.show()
+        }
+
     }
 
     override fun onBackPressed() {
@@ -111,6 +147,61 @@ class AddOrderItemActivity : AppCompatActivity() {
         val resultIntent = Intent()
         setResult(RESULT_OK, resultIntent)
         finish()
+    }
+
+    fun deleteOrderItem(lineNo: String) {
+        if (Utils.isOnline(this)) {
+            ProgressDialog.start(this)
+            ApiClient.getRestClient(
+                Constants.BASE_URL
+            )!!.webservices.deleteItem(
+                DeleteItemRequest(
+                    orderNo, lineNo
+                )
+            ).enqueue(object : Callback<JsonObject> {
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                    ProgressDialog.dismiss()
+                    if (response.isSuccessful) {
+                        try {
+                            if (!response.body()!!.get("status").asBoolean) {
+                                Toast.makeText(
+                                    this@AddOrderItemActivity,
+                                    response.body()!!.get("msg").toString().replace('"', ' ')
+                                        .trim(),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } else {
+                                Toast.makeText(
+                                    this@AddOrderItemActivity,
+                                    "The order item has been successfully deleted.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                emptyData()
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
+                    Toast.makeText(
+                        this@AddOrderItemActivity,
+                        getString(R.string.api_fail_message),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    ProgressDialog.dismiss()
+                }
+            })
+
+
+        } else {
+            Toast.makeText(
+                this,
+                getString(R.string.please_check_your_internet_connection),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     private fun addQuantity() {
@@ -172,14 +263,14 @@ class AddOrderItemActivity : AppCompatActivity() {
 
     }
 
-    private fun searchItemNoAPI() {
+    private fun updateOrder(lineNo: Int?, qty: String) {
         if (Utils.isOnline(this)) {
             ProgressDialog.start(this)
             ApiClient.getRestClient(
                 Constants.BASE_URL
-            )!!.webservices.searchItemNo(
-                SearchOrderRequest(
-                    et_barcode.text.toString().trim()
+            )!!.webservices.updateItemQty(
+                UpdateItemRequest(
+                    orderNo, lineNo.toString(), qty
                 )
             ).enqueue(object : Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
@@ -189,37 +280,12 @@ class AddOrderItemActivity : AppCompatActivity() {
                             if (!response.body()!!.get("status").asBoolean) {
                                 Toast.makeText(
                                     this@AddOrderItemActivity,
-                                    "API Failed",
+                                    response.body()!!.get("msg").toString().replace('"', ' ')
+                                        .trim(),
                                     Toast.LENGTH_SHORT
                                 ).show()
-                                emptyData()
                             } else {
-                                itemArrayList =
-                                    Gson().fromJson(
-                                        response.body()!!.getAsJsonObject("data")
-                                            .getAsJsonArray("value"),
-                                        getArray.type
-                                    )
-                                when (itemArrayList.size) {
-                                    0 -> {
-                                        emptyData()
-                                        Toast.makeText(
-                                            this@AddOrderItemActivity,
-                                            "Please enter correct Item No",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
-
-                                    1 -> {
-                                        setData(itemArrayList[0])
-                                    }
-
-                                    else -> {
-                                        openDialog(itemArrayList)
-                                    }
-                                }
-
-
+                                emptyData()
                             }
                         } catch (e: Exception) {
                             e.printStackTrace()
@@ -228,7 +294,6 @@ class AddOrderItemActivity : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
-                    emptyData()
                     Toast.makeText(
                         this@AddOrderItemActivity,
                         getString(R.string.api_fail_message),
@@ -246,6 +311,117 @@ class AddOrderItemActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
         }
+
+    }
+
+    private fun searchItemNoAPI() {
+        foundItem =
+            orderArrayList.find { it.uPC == et_barcode.text.toString() || it.itemNo2 == et_barcode.text.toString() }
+        if (foundItem != null) {
+            findData(foundItem!!)
+        } else {
+            if (Utils.isOnline(this)) {
+                ProgressDialog.start(this)
+                ApiClient.getRestClient(
+                    Constants.BASE_URL
+                )!!.webservices.searchItemNo(
+                    SearchOrderRequest(
+                        et_barcode.text.toString().trim()
+                    )
+                ).enqueue(object : Callback<JsonObject> {
+                    override fun onResponse(
+                        call: Call<JsonObject>,
+                        response: Response<JsonObject>
+                    ) {
+                        ProgressDialog.dismiss()
+                        if (response.isSuccessful) {
+                            try {
+                                if (!response.body()!!.get("status").asBoolean) {
+                                    Toast.makeText(
+                                        this@AddOrderItemActivity,
+                                        "API Failed",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    emptyData()
+                                } else {
+                                    itemArrayList =
+                                        Gson().fromJson(
+                                            response.body()!!.getAsJsonObject("data")
+                                                .getAsJsonArray("value"),
+                                            getArray.type
+                                        )
+                                    when (itemArrayList.size) {
+                                        0 -> {
+                                            emptyData()
+                                            Toast.makeText(
+                                                this@AddOrderItemActivity,
+                                                "Please enter correct Item No",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+
+                                        1 -> {
+                                            setData(itemArrayList[0])
+                                        }
+
+                                        else -> {
+                                            openDialog(itemArrayList)
+                                        }
+                                    }
+
+
+                                }
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
+                        emptyData()
+                        Toast.makeText(
+                            this@AddOrderItemActivity,
+                            getString(R.string.api_fail_message),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        ProgressDialog.dismiss()
+                    }
+                })
+
+
+            } else {
+                Toast.makeText(
+                    this,
+                    getString(R.string.please_check_your_internet_connection),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+        }
+
+
+    }
+
+    private fun findData(item: SalesOrderLinesItem) {
+        et_barcode.setText("")
+        iv_clean.visibility = View.INVISIBLE
+        tvUPC.text = item.uPC
+        tvNo.text = item.itemNo2
+        tvDescription.text = item.description
+        tvUnitofMeasure.text = item.unitOfMeasure
+        tvUnitPrice.text = item.updatedUnitPrice()
+        evQuantity.setText(item.quantity.toString())
+        evQuantity.isEnabled = true
+        tvAdd.visibility = View.GONE
+        llEditDelete.visibility = View.VISIBLE
+        evQuantity.requestFocus()
+        selectedItemNo = item.no.toString()
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(evQuantity, InputMethodManager.SHOW_IMPLICIT)
+
+        }, 500)
 
     }
 
@@ -291,6 +467,7 @@ class AddOrderItemActivity : AppCompatActivity() {
         evQuantity.setText("")
         evQuantity.isEnabled = true
         tvAdd.visibility = View.VISIBLE
+        llEditDelete.visibility = View.GONE
         evQuantity.requestFocus()
         selectedItemNo = item.no.toString()
 
@@ -314,6 +491,7 @@ class AddOrderItemActivity : AppCompatActivity() {
         evQuantity.setText("")
         evQuantity.isEnabled = false
         tvAdd.visibility = View.GONE
+        llEditDelete.visibility = View.GONE
 
     }
 }
