@@ -9,6 +9,7 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
@@ -46,9 +47,11 @@ import kotlinx.android.synthetic.main.activity_add_order_item.tvSearchNo
 import kotlinx.android.synthetic.main.activity_add_order_item.tvUPC
 import kotlinx.android.synthetic.main.activity_add_order_item.tvUnitPrice
 import kotlinx.android.synthetic.main.activity_add_order_item.tvUnitofMeasure
+import kotlinx.android.synthetic.main.activity_home.ivLogout
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.math.log
 
 class AddOrderItemActivity : AppCompatActivity() {
     private var itemArrayList = ArrayList<OrderItemResponse>()
@@ -117,7 +120,12 @@ class AddOrderItemActivity : AppCompatActivity() {
         }
 
         tvEdit.setOnClickListener {
-            updateOrder(foundItem!!.lineNo, evQuantity.text.toString())
+            if (evQuantity.text.toString().isEmpty()) {
+                Toast.makeText(this, "Please enter quantity", Toast.LENGTH_SHORT).show()
+            } else {
+                updateOrder(foundItem!!.lineNo, evQuantity.text.toString())
+            }
+
         }
 
         tvDelete.setOnClickListener {
@@ -217,6 +225,7 @@ class AddOrderItemActivity : AppCompatActivity() {
             ).enqueue(object : Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                     ProgressDialog.dismiss()
+                    Log.d("Kaivan", response.body().toString())
                     if (response.isSuccessful) {
                         try {
                             if (!response.body()!!.get("status").asBoolean) {
@@ -226,6 +235,7 @@ class AddOrderItemActivity : AppCompatActivity() {
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 emptyData()
+
                             } else {
                                 emptyData()
                                 Toast.makeText(
@@ -233,6 +243,11 @@ class AddOrderItemActivity : AppCompatActivity() {
                                     "Item Added",
                                     Toast.LENGTH_SHORT
                                 ).show()
+                                val salesOrderLinesItem: SalesOrderLinesItem = Gson().fromJson(
+                                    response.body()!!.getAsJsonObject("data"),
+                                    SalesOrderLinesItem::class.java
+                                )
+                                orderArrayList.add(salesOrderLinesItem)
                             }
                         } catch (e: Exception) {
                             e.printStackTrace()
@@ -315,6 +330,7 @@ class AddOrderItemActivity : AppCompatActivity() {
     }
 
     private fun searchItemNoAPI() {
+        Log.d("TAG", "searchItemNoAPI: " + et_barcode.text.toString().trim())
         foundItem =
             orderArrayList.find { it.uPC == et_barcode.text.toString() || it.itemNo2 == et_barcode.text.toString() }
         if (foundItem != null) {
