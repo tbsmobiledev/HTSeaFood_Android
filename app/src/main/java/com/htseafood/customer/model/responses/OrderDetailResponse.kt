@@ -80,7 +80,10 @@ data class SalesOrderLinesItem(
     val no: String? = null,
 
     @SerializedName("quantity")
-    val quantity: Int? = null,
+    var quantity: Int? = null,
+
+    @SerializedName("qty")
+    val qty: Int? = null,
 
     @SerializedName("unitOfMeasure")
     val unitOfMeasure: String? = null,

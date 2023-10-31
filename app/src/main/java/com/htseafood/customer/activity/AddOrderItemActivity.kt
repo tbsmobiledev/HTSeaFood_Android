@@ -10,7 +10,9 @@ import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
@@ -89,12 +91,19 @@ class AddOrderItemActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable) {
-                if (s.toString().length > 6) {
-                    searchItemNoAPI()
-                    Utils.hideSoftKeyboard(this@AddOrderItemActivity, et_barcode)
-                }
+
             }
         })
+
+        et_barcode.setOnEditorActionListener { textView, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE || event != null && event.keyCode == KeyEvent.KEYCODE_ENTER) {
+                // Code to be executed when the Enter key is pressed
+                searchItemNoAPI()
+                Utils.hideSoftKeyboard(this@AddOrderItemActivity, et_barcode)
+                return@setOnEditorActionListener true
+            }
+            false
+        }
 
         iv_clean.setOnClickListener {
             et_barcode.setText("")
@@ -300,6 +309,17 @@ class AddOrderItemActivity : AppCompatActivity() {
                                     Toast.LENGTH_SHORT
                                 ).show()
                             } else {
+                                Toast.makeText(
+                                    this@AddOrderItemActivity,
+                                    "Item Updated",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                val salesOrderLinesItem: SalesOrderLinesItem = Gson().fromJson(
+                                    response.body()!!.getAsJsonObject("data"),
+                                    SalesOrderLinesItem::class.java
+                                )
+                                foundItem = orderArrayList.find { it.lineNo == lineNo }
+                                foundItem!!.quantity = salesOrderLinesItem.qty
                                 emptyData()
                             }
                         } catch (e: Exception) {
