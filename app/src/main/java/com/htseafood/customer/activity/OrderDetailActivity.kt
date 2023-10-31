@@ -29,6 +29,7 @@ import com.htseafood.customer.model.request.AddOrderRequest
 import com.htseafood.customer.model.request.DeleteItemRequest
 import com.htseafood.customer.model.request.DeleteOrderRequest
 import com.htseafood.customer.model.request.OrderDetailRequest
+import com.htseafood.customer.model.request.PDFRequest
 import com.htseafood.customer.model.request.UpdateItemRequest
 import com.htseafood.customer.model.responses.OrderDetailResponse
 import com.htseafood.customer.model.responses.SalesOrderLinesItem
@@ -44,6 +45,7 @@ import kotlinx.android.synthetic.main.activity_order_detail.rvList
 import kotlinx.android.synthetic.main.activity_order_detail.tvAddress
 import kotlinx.android.synthetic.main.activity_order_detail.tvContactPerson
 import kotlinx.android.synthetic.main.activity_order_detail.tvOrderdate
+import kotlinx.android.synthetic.main.activity_order_detail.tvPDFSend
 import kotlinx.android.synthetic.main.activity_order_detail.tvPostingdate
 import kotlinx.android.synthetic.main.activity_order_detail.tvShipingdate
 import kotlinx.android.synthetic.main.activity_order_detail.tvTitle
@@ -128,6 +130,64 @@ class OrderDetailActivity : AppCompatActivity(), DeleteItemListener, EditListene
             val intent = Intent(this, AddOrderItemActivity::class.java).putExtra("orderNo", id)
                 .putExtra("orderData", Gson().toJson(detailResponse!!.salesOrderLines))
             resultLauncher.launch(intent)
+        }
+
+        tvPDFSend.setOnClickListener {
+
+            if (Utils.isOnline(this)) {
+                ProgressDialog.start(this)
+                ApiClient.getRestClient(
+                    Constants.BASE_URL
+                )!!.webservices.sendPDFRequest(
+                    PDFRequest(
+                        id, SharedHelper.getKey(this, Constants.CustmerEmail)
+                    )
+                ).enqueue(object : Callback<JsonObject> {
+                    override fun onResponse(
+                        call: Call<JsonObject>,
+                        response: Response<JsonObject>
+                    ) {
+                        ProgressDialog.dismiss()
+                        if (response.isSuccessful) {
+                            try {
+                                if (!response.body()!!.get("status").asBoolean) {
+                                    Toast.makeText(
+                                        this@OrderDetailActivity,
+                                        "API Failed",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                } else {
+                                    Toast.makeText(
+                                        this@OrderDetailActivity,
+                                        "The order list PDF has been successfully sent.",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+
+                                }
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
+                        Toast.makeText(
+                            this@OrderDetailActivity,
+                            getString(R.string.api_fail_message),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        ProgressDialog.dismiss()
+                    }
+                })
+
+
+            } else {
+                Toast.makeText(
+                    this,
+                    getString(R.string.please_check_your_internet_connection),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
 
 

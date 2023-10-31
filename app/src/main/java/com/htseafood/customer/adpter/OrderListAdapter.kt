@@ -8,13 +8,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.htseafood.customer.databinding.ItemOrderBinding
 import com.htseafood.customer.interfaces.OrderListener
+import com.htseafood.customer.interfaces.PDFListener
 import com.htseafood.customer.model.responses.ValueItem
 
 
 class OrderListAdapter(
     private val mActivity: Activity,
     private val orderList: MutableList<ValueItem>?,
-    val orderListener: OrderListener
+    val orderListener: OrderListener,
+    val pdfListener: PDFListener
 ) :
     RecyclerView.Adapter<OrderListAdapter.ViewHolder>() {
     private val layoutInflater: LayoutInflater = mActivity.layoutInflater
@@ -39,6 +41,10 @@ class OrderListAdapter(
 
         holder.binding.llOrder.setOnClickListener {
             orderListener.openOrder(orderList[position].no.toString())
+        }
+
+        holder.binding.tvPDFSend.setOnClickListener {
+            pdfListener.sendPDF(orderList[position].no.toString())
         }
 
         holder.binding.tvOrderNo.text = "Order No : #" + orderList[position].no

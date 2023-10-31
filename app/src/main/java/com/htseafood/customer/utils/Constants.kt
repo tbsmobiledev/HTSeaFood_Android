@@ -20,11 +20,13 @@ class Constants {
         const val SEARCH_ITEMNO = "searchitemno.php"
         const val ADD_ITEM = "createsalesorderline.php"
         const val UPDATE_ITEM = "modifysalesorderline.php"
+        const val SEND_ORDER_PDF = "sendOrderPDF.php"
 
         // Constants Key
         const val IS_LOGIN = "is_login"
         const val CustmerNo = "custmerNo"
         const val CustmerName = "custmerName"
+        const val CustmerEmail = "custmerEmail"
 
     }
 

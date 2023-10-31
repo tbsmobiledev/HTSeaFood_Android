@@ -1,5 +1,6 @@
 package com.htseafood.customer.apis
 
+import com.google.gson.JsonObject
 import com.htseafood.customer.model.request.AddItemRequest
 import com.htseafood.customer.model.request.AddOrderRequest
 import com.htseafood.customer.model.request.DeleteItemRequest
@@ -8,12 +9,11 @@ import com.htseafood.customer.model.request.InvoiceDetailRequest
 import com.htseafood.customer.model.request.ListRequest
 import com.htseafood.customer.model.request.LoginRequest
 import com.htseafood.customer.model.request.OrderDetailRequest
+import com.htseafood.customer.model.request.PDFRequest
 import com.htseafood.customer.model.request.SearchOrderRequest
 import com.htseafood.customer.model.request.ShipmentDetailRequest
 import com.htseafood.customer.model.request.UpdateItemRequest
 import com.htseafood.customer.utils.Constants
-import com.google.gson.JsonObject
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -61,4 +61,7 @@ interface ApiInterface {
 
     @POST(Constants.UPDATE_ITEM)
     fun updateItemQty(@Body updateItemRequest: UpdateItemRequest): Call<JsonObject>
+
+    @POST(Constants.SEND_ORDER_PDF)
+    fun sendPDFRequest(@Body pdfRequest: PDFRequest): Call<JsonObject>
 }

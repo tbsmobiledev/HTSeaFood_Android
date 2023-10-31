@@ -11,6 +11,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.reflect.TypeToken
 import com.htseafood.customer.R
 import com.htseafood.customer.adpter.InvoiceListAdapter
 import com.htseafood.customer.adpter.OrderListAdapter
@@ -18,15 +21,14 @@ import com.htseafood.customer.adpter.ShipmentListAdapter
 import com.htseafood.customer.apis.ApiClient
 import com.htseafood.customer.custom.EqualSpacingItemDecoration
 import com.htseafood.customer.interfaces.OrderListener
+import com.htseafood.customer.interfaces.PDFListener
 import com.htseafood.customer.model.request.ListRequest
+import com.htseafood.customer.model.request.PDFRequest
 import com.htseafood.customer.model.responses.ValueItem
 import com.htseafood.customer.utils.Constants
 import com.htseafood.customer.utils.ProgressDialog
 import com.htseafood.customer.utils.SharedHelper
 import com.htseafood.customer.utils.Utils
-import com.google.gson.Gson
-import com.google.gson.JsonObject
-import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_home.ivAdd
 import kotlinx.android.synthetic.main.activity_home.ivInvoice
 import kotlinx.android.synthetic.main.activity_home.ivLogout
@@ -36,6 +38,7 @@ import kotlinx.android.synthetic.main.activity_home.llInvoice
 import kotlinx.android.synthetic.main.activity_home.llOrder
 import kotlinx.android.synthetic.main.activity_home.llShipment
 import kotlinx.android.synthetic.main.activity_home.rvList
+import kotlinx.android.synthetic.main.activity_home.tvCustEmail
 import kotlinx.android.synthetic.main.activity_home.tvCustName
 import kotlinx.android.synthetic.main.activity_home.tvInvoice
 import kotlinx.android.synthetic.main.activity_home.tvNoDataFound
@@ -48,7 +51,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class HomeActivity : AppCompatActivity(), OrderListener {
+class HomeActivity : AppCompatActivity(), OrderListener, PDFListener {
     private var totalItemCount = 10
     private var invoiceListAdapter: InvoiceListAdapter? = null
     private var orderListAdapter: OrderListAdapter? = null
@@ -73,7 +76,8 @@ class HomeActivity : AppCompatActivity(), OrderListener {
 
 
         tvNumber.text = SharedHelper.getKey(this, Constants.CustmerNo)
-        tvCustName.text=SharedHelper.getKey(this, Constants.CustmerName)
+        tvCustName.text = SharedHelper.getKey(this, Constants.CustmerName)
+        tvCustEmail.text = SharedHelper.getKey(this, Constants.CustmerEmail)
 
 
         rvList.addItemDecoration(
@@ -465,7 +469,7 @@ class HomeActivity : AppCompatActivity(), OrderListener {
             rvList!!.visibility = View.VISIBLE
             tvNoDataFound!!.visibility = View.GONE
             if (totalItemCount == 10) {
-                orderListAdapter = OrderListAdapter(this, itemArrayList, this)
+                orderListAdapter = OrderListAdapter(this, itemArrayList, this, this)
                 rvList!!.adapter = orderListAdapter
 
             } else {
@@ -507,5 +511,59 @@ class HomeActivity : AppCompatActivity(), OrderListener {
         val intent = Intent(this, OrderDetailActivity::class.java).putExtra("id", "create")
             .putExtra("id", orderId)
         resultLauncher.launch(intent)
+    }
+
+    override fun sendPDF(orderId: String) {
+
+        if (Utils.isOnline(this)) {
+            ProgressDialog.start(this)
+            ApiClient.getRestClient(
+                Constants.BASE_URL
+            )!!.webservices.sendPDFRequest(
+                PDFRequest(
+                    orderId,  /*SharedHelper.getKey(this,Constants.CustmerEmail)*/
+                    "kaivan.desai@techcronus.com"
+                )
+            ).enqueue(object : Callback<JsonObject> {
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                    ProgressDialog.dismiss()
+                    if (response.isSuccessful) {
+                        try {
+                            if (!response.body()!!.get("status").asBoolean) {
+                                Toast.makeText(
+                                    this@HomeActivity,
+                                    "API Failed",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } else {
+                                Toast.makeText(
+                                    this@HomeActivity,
+                                    "The order list PDF has been successfully sent.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+
+                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
+                    Toast.makeText(
+                        this@HomeActivity, getString(R.string.api_fail_message), Toast.LENGTH_SHORT
+                    ).show()
+                    ProgressDialog.dismiss()
+                }
+            })
+
+
+        } else {
+            Toast.makeText(
+                this,
+                getString(R.string.please_check_your_internet_connection),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 }

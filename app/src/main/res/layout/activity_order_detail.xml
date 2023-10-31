@@ -216,6 +216,21 @@
                 android:textSize="@dimen/_10ssp"
                 tools:text="02-10-2023" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvPDFSend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/corner_round_black_bg"
+            android:fontFamily="@font/sora_bold"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:paddingVertical="@dimen/_8sdp"
+            android:text="Send email in PDF"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

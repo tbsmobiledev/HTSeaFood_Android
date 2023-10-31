@@ -1,11 +1,12 @@
 package com.htseafood.customer.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputType
 import android.view.MotionEvent
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.google.gson.JsonObject
 import com.htseafood.customer.R
 import com.htseafood.customer.apis.ApiClient
 import com.htseafood.customer.model.request.LoginRequest
@@ -13,9 +14,8 @@ import com.htseafood.customer.utils.Constants
 import com.htseafood.customer.utils.ProgressDialog
 import com.htseafood.customer.utils.SharedHelper
 import com.htseafood.customer.utils.Utils
-import com.google.gson.JsonObject
-import kotlinx.android.synthetic.main.activity_login.etUsername
 import kotlinx.android.synthetic.main.activity_login.etPassword
+import kotlinx.android.synthetic.main.activity_login.etUsername
 import kotlinx.android.synthetic.main.activity_login.tvSignIn
 import retrofit2.Call
 import retrofit2.Callback
@@ -103,6 +103,12 @@ class LoginActivity : AppCompatActivity() {
                                 this@LoginActivity,
                                 Constants.CustmerName,
                                 response.body()!!.getAsJsonObject("data").get("customerName")
+                                    .toString().replace('"', ' ').trim()
+                            )
+                            SharedHelper.putKey(
+                                this@LoginActivity,
+                                Constants.CustmerEmail,
+                                response.body()!!.getAsJsonObject("data").get("customerEmail")
                                     .toString().replace('"', ' ').trim()
                             )
                             SharedHelper.putKey(
