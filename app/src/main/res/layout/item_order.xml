@@ -288,7 +288,7 @@
                 android:includeFontPadding="false"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingVertical="@dimen/_5sdp"
-                android:text="Send email in PDF"
+                android:text="Send Order PDF"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_10ssp" />
 

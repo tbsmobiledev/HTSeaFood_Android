@@ -521,8 +521,8 @@ class HomeActivity : AppCompatActivity(), OrderListener, PDFListener {
                 Constants.BASE_URL
             )!!.webservices.sendPDFRequest(
                 PDFRequest(
-                    orderId,  /*SharedHelper.getKey(this,Constants.CustmerEmail)*/
-                    "kaivan.desai@techcronus.com"
+                    orderId, SharedHelper.getKey(this, Constants.CustmerEmail)
+
                 )
             ).enqueue(object : Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
