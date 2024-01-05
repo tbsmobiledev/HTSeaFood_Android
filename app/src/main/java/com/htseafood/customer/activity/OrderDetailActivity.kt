@@ -133,61 +133,67 @@ class OrderDetailActivity : AppCompatActivity(), DeleteItemListener, EditListene
         }
 
         tvPDFSend.setOnClickListener {
+            if (detailResponse!!.amountIncludingVAT != 0.0 && SharedHelper.getKey(
+                    this,
+                    Constants.CustmerEmail
+                ) != ""
+            ) {
+                if (Utils.isOnline(this)) {
+                    ProgressDialog.start(this)
+                    ApiClient.getRestClient(
+                        Constants.BASE_URL
+                    )!!.webservices.sendPDFRequest(
+                        PDFRequest(
+                            id, SharedHelper.getKey(this, Constants.CustmerEmail)
+                        )
+                    ).enqueue(object : Callback<JsonObject> {
+                        override fun onResponse(
+                            call: Call<JsonObject>,
+                            response: Response<JsonObject>
+                        ) {
+                            ProgressDialog.dismiss()
+                            if (response.isSuccessful) {
+                                try {
+                                    if (!response.body()!!.get("status").asBoolean) {
+                                        Toast.makeText(
+                                            this@OrderDetailActivity,
+                                            "API Failed",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    } else {
+                                        Toast.makeText(
+                                            this@OrderDetailActivity,
+                                            "The order list PDF has been successfully sent.",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
 
-            if (Utils.isOnline(this)) {
-                ProgressDialog.start(this)
-                ApiClient.getRestClient(
-                    Constants.BASE_URL
-                )!!.webservices.sendPDFRequest(
-                    PDFRequest(
-                        id, SharedHelper.getKey(this, Constants.CustmerEmail)
-                    )
-                ).enqueue(object : Callback<JsonObject> {
-                    override fun onResponse(
-                        call: Call<JsonObject>,
-                        response: Response<JsonObject>
-                    ) {
-                        ProgressDialog.dismiss()
-                        if (response.isSuccessful) {
-                            try {
-                                if (!response.body()!!.get("status").asBoolean) {
-                                    Toast.makeText(
-                                        this@OrderDetailActivity,
-                                        "API Failed",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                } else {
-                                    Toast.makeText(
-                                        this@OrderDetailActivity,
-                                        "The order list PDF has been successfully sent.",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-
+                                    }
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
                                 }
-                            } catch (e: Exception) {
-                                e.printStackTrace()
                             }
                         }
-                    }
 
-                    override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
-                        Toast.makeText(
-                            this@OrderDetailActivity,
-                            getString(R.string.api_fail_message),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        ProgressDialog.dismiss()
-                    }
-                })
+                        override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
+                            Toast.makeText(
+                                this@OrderDetailActivity,
+                                getString(R.string.api_fail_message),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            ProgressDialog.dismiss()
+                        }
+                    })
 
 
-            } else {
-                Toast.makeText(
-                    this,
-                    getString(R.string.please_check_your_internet_connection),
-                    Toast.LENGTH_SHORT
-                ).show()
+                } else {
+                    Toast.makeText(
+                        this,
+                        getString(R.string.please_check_your_internet_connection),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
+
         }
 
 

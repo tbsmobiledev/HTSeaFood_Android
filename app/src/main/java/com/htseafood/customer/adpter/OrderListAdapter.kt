@@ -10,6 +10,8 @@ import com.htseafood.customer.databinding.ItemOrderBinding
 import com.htseafood.customer.interfaces.OrderListener
 import com.htseafood.customer.interfaces.PDFListener
 import com.htseafood.customer.model.responses.ValueItem
+import com.htseafood.customer.utils.Constants
+import com.htseafood.customer.utils.SharedHelper
 
 
 class OrderListAdapter(
@@ -44,7 +46,13 @@ class OrderListAdapter(
         }
 
         holder.binding.tvPDFSend.setOnClickListener {
-            pdfListener.sendPDF(orderList[position].no.toString())
+            if (orderList[position].amountIncludingVAT != 0.0 && SharedHelper.getKey(
+                    mActivity,
+                    Constants.CustmerEmail
+                ) != ""
+            ) {
+                pdfListener.sendPDF(orderList[position].no.toString())
+            }
         }
 
         holder.binding.tvOrderNo.text = "Order No : #" + orderList[position].no
