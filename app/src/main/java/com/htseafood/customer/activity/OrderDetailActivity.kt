@@ -8,6 +8,9 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.SpannableString
+import android.text.TextUtils
+import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -56,6 +59,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
 class OrderDetailActivity : AppCompatActivity(), DeleteItemListener, EditListener {
     var id = ""
     var isrefresh = false
@@ -100,8 +104,17 @@ class OrderDetailActivity : AppCompatActivity(), DeleteItemListener, EditListene
 
         ivDelete.setOnClickListener {
             val builder = android.app.AlertDialog.Builder(this)
+            val confirmationText = "Are you sure you want to delete this order?"
+            val blackMessageSpannable = SpannableString(confirmationText)
+
+            val message =
+                "Note: Deleting an order here will permanently delete it from the source ERP as well. Please confirm the deletion."
+            val redMessage = SpannableString(message)
+            redMessage.setSpan(ForegroundColorSpan(Color.RED), 0, message.length, 0)
+
             builder.setTitle("Delete Order")
-            builder.setMessage("Are you sure you want to delete this order?")
+            builder.setMessage(TextUtils.concat(blackMessageSpannable, "\n\n", redMessage))
+
 
             //performing positive action
             builder.setPositiveButton("Yes") { dialogInterface, which ->

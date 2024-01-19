@@ -40,7 +40,7 @@
             android:layout_height="@dimen/_17sdp"
             android:layout_centerVertical="true"
             android:layout_toStartOf="@+id/ivDelete"
-            android:paddingEnd="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
             android:src="@drawable/add"
             android:visibility="visible" />
 
@@ -50,7 +50,7 @@
             android:layout_height="@dimen/_17sdp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:paddingEnd="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
             android:src="@drawable/delete" />
     </RelativeLayout>
 
