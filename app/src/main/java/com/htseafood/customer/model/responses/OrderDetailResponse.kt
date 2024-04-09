@@ -85,6 +85,9 @@ data class SalesOrderLinesItem(
     @SerializedName("qty")
     val qty: Int? = null,
 
+    @SerializedName("qtyOnHand")
+    val qtyOnHand: Int? = null,
+
     @SerializedName("unitOfMeasure")
     val unitOfMeasure: String? = null,
 

@@ -137,6 +137,34 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sora_regular"
                     android:includeFontPadding="false"
+                    android:text="Quantity on Hand"
+                    android:textColor="@color/light_text"
+                    android:textSize="@dimen/_11ssp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:fontFamily="@font/sora_regular"
+                    android:includeFontPadding="false"
+                    android:text="@{detail.qtyOnHand.toString()}"
+                    android:textColor="@color/dark_text"
+                    android:textSize="@dimen/_11ssp"
+                    tools:text="40" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/sora_regular"
+                    android:includeFontPadding="false"
                     android:text="@string/unit_of_measure"
                     android:textColor="@color/light_text"
                     android:textSize="@dimen/_11ssp" />
