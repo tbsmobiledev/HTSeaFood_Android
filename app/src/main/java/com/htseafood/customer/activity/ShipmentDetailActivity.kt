@@ -5,6 +5,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.htseafood.customer.R
 import com.htseafood.customer.adpter.ShipmentItemListAdapter
 import com.htseafood.customer.apis.ApiClient
@@ -14,9 +16,13 @@ import com.htseafood.customer.model.responses.ShipmentDetailResponse
 import com.htseafood.customer.utils.Constants
 import com.htseafood.customer.utils.ProgressDialog
 import com.htseafood.customer.utils.Utils
-import com.google.gson.Gson
-import com.google.gson.JsonObject
-import kotlinx.android.synthetic.main.activity_shipment_detail.*
+import kotlinx.android.synthetic.main.activity_shipment_detail.ivBack
+import kotlinx.android.synthetic.main.activity_shipment_detail.llView
+import kotlinx.android.synthetic.main.activity_shipment_detail.rvList
+import kotlinx.android.synthetic.main.activity_shipment_detail.tvAddress
+import kotlinx.android.synthetic.main.activity_shipment_detail.tvOrderdate
+import kotlinx.android.synthetic.main.activity_shipment_detail.tvPostingdate
+import kotlinx.android.synthetic.main.activity_shipment_detail.tvTitle
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

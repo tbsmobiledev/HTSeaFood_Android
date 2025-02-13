@@ -259,12 +259,78 @@
                 android:textSize="@dimen/_11ssp"
                 tools:text="$130.00" />
         </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginVertical="@dimen/_5sdp"
+            android:background="@color/gray" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sora_regular"
+                android:includeFontPadding="false"
+                android:text="@string/case_pack"
+                android:textColor="@color/light_text"
+                android:textSize="@dimen/_11ssp" />
+
+            <TextView
+                android:id="@+id/tvCasePack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:fontFamily="@font/sora_regular"
+                android:includeFontPadding="false"
+                android:textColor="@color/dark_text"
+                android:textSize="@dimen/_11ssp"
+                tools:text="10X2LBS" />
+        </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"
             android:layout_marginVertical="@dimen/_5sdp"
             android:background="@color/gray" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sora_regular"
+                android:includeFontPadding="false"
+                android:text="Quantity on Hand"
+                android:textColor="@color/light_text"
+                android:textSize="@dimen/_11ssp" />
+
+            <TextView
+                android:id="@+id/tvQtyOnHand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:fontFamily="@font/sora_regular"
+                android:includeFontPadding="false"
+                android:textColor="@color/dark_text"
+                android:textSize="@dimen/_11ssp"
+                tools:text="2" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"
+            android:layout_marginVertical="@dimen/_5sdp"
+            android:background="@color/gray" />
+
 
         <RelativeLayout
             android:layout_width="match_parent"

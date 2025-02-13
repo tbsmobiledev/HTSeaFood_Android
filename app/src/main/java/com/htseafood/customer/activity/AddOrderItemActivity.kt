@@ -41,19 +41,19 @@ import kotlinx.android.synthetic.main.activity_add_order_item.ivBack
 import kotlinx.android.synthetic.main.activity_add_order_item.iv_clean
 import kotlinx.android.synthetic.main.activity_add_order_item.llEditDelete
 import kotlinx.android.synthetic.main.activity_add_order_item.tvAdd
+import kotlinx.android.synthetic.main.activity_add_order_item.tvCasePack
 import kotlinx.android.synthetic.main.activity_add_order_item.tvDelete
 import kotlinx.android.synthetic.main.activity_add_order_item.tvDescription
 import kotlinx.android.synthetic.main.activity_add_order_item.tvEdit
 import kotlinx.android.synthetic.main.activity_add_order_item.tvNo
+import kotlinx.android.synthetic.main.activity_add_order_item.tvQtyOnHand
 import kotlinx.android.synthetic.main.activity_add_order_item.tvSearchNo
 import kotlinx.android.synthetic.main.activity_add_order_item.tvUPC
 import kotlinx.android.synthetic.main.activity_add_order_item.tvUnitPrice
 import kotlinx.android.synthetic.main.activity_add_order_item.tvUnitofMeasure
-import kotlinx.android.synthetic.main.activity_home.ivLogout
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.math.log
 
 class AddOrderItemActivity : AppCompatActivity() {
     private var itemArrayList = ArrayList<OrderItemResponse>()
@@ -446,6 +446,8 @@ class AddOrderItemActivity : AppCompatActivity() {
         tvDescription.text = item.description
         tvUnitofMeasure.text = item.unitOfMeasure
         tvUnitPrice.text = item.updatedUnitPrice()
+        tvQtyOnHand.text = item.qtyOnHand.toString()
+        tvCasePack.text = item.casePack
         evQuantity.setText(item.quantity.toString())
         evQuantity.isEnabled = true
         tvAdd.visibility = View.GONE
@@ -499,6 +501,8 @@ class AddOrderItemActivity : AppCompatActivity() {
         tvNo.text = item.itemNo2
         tvDescription.text = item.description
         tvUnitofMeasure.text = item.baseUnitOfMeasure
+        tvCasePack.text = item.casePack
+        tvQtyOnHand.text = item.qtyOnHand.toString()
         tvUnitPrice.text = item.updatedUnitPrice()
         evQuantity.setText("")
         evQuantity.isEnabled = true

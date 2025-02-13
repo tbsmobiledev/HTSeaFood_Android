@@ -24,7 +24,13 @@ data class OrderItemResponse(
 	val itemNo2: String? = null,
 
 	@SerializedName("searchDescription")
-	val searchDescription: String? = null
+    val searchDescription: String? = null,
+
+    @SerializedName("qtyOnHand")
+    val qtyOnHand: Int? = null,
+
+    @SerializedName("casePack")
+    val casePack: String? = null,
 )
 {
 	fun updatedUnitPrice(): String {
