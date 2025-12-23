@@ -3,37 +3,34 @@ package com.htseafood.customer.activity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.htseafood.customer.R
 import com.htseafood.customer.adpter.ShipmentItemListAdapter
 import com.htseafood.customer.apis.ApiClient
+import com.htseafood.customer.custom.BaseActivity
 import com.htseafood.customer.custom.EqualSpacingItemDecoration
+import com.htseafood.customer.databinding.ActivityShipmentDetailBinding
 import com.htseafood.customer.model.request.ShipmentDetailRequest
 import com.htseafood.customer.model.responses.ShipmentDetailResponse
 import com.htseafood.customer.utils.Constants
 import com.htseafood.customer.utils.ProgressDialog
 import com.htseafood.customer.utils.Utils
-import kotlinx.android.synthetic.main.activity_shipment_detail.ivBack
-import kotlinx.android.synthetic.main.activity_shipment_detail.llView
-import kotlinx.android.synthetic.main.activity_shipment_detail.rvList
-import kotlinx.android.synthetic.main.activity_shipment_detail.tvAddress
-import kotlinx.android.synthetic.main.activity_shipment_detail.tvOrderdate
-import kotlinx.android.synthetic.main.activity_shipment_detail.tvPostingdate
-import kotlinx.android.synthetic.main.activity_shipment_detail.tvTitle
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
-class ShipmentDetailActivity : AppCompatActivity() {
+class ShipmentDetailActivity : BaseActivity<ActivityShipmentDetailBinding>() {
     var id = ""
+    override fun inflateBinding(): ActivityShipmentDetailBinding {
+        return ActivityShipmentDetailBinding.inflate(layoutInflater)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_shipment_detail)
-        ivBack.setOnClickListener {
+        binding.ivBack.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
@@ -42,13 +39,14 @@ class ShipmentDetailActivity : AppCompatActivity() {
         }
 
 
-        rvList.addItemDecoration(
+        binding.rvList.addItemDecoration(
             EqualSpacingItemDecoration(
                 resources.getDimension(com.intuit.sdp.R.dimen._10sdp).toInt(),
                 EqualSpacingItemDecoration.VERTICAL
             )
         )
-        rvList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.rvList.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         detailAPI()
 
 
@@ -81,15 +79,18 @@ class ShipmentDetailActivity : AppCompatActivity() {
                                         response.body()!!.getAsJsonObject("data"),
                                         ShipmentDetailResponse::class.java
                                     )
-                                llView.visibility= View.VISIBLE
-                                tvTitle.text = "Shipment ID: #${detailResponse.no}"
-                                tvAddress.text =
+                                binding.llView.visibility = View.VISIBLE
+                                binding.tvTitle.text = "Shipment ID: #${detailResponse.no}"
+                                binding.tvAddress.text =
                                     detailResponse.sellToAddress + ", " + detailResponse.sellToCity
-                                tvOrderdate.text = detailResponse.orderDate
-                                tvPostingdate.text = detailResponse.postingDate
+                                binding.tvOrderdate.text = detailResponse.orderDate
+                                binding.tvPostingdate.text = detailResponse.postingDate
                                 if (detailResponse.postedSalesShipmentLines!!.isNotEmpty()) {
-                                    val shipmentItemListAdapter = ShipmentItemListAdapter(this@ShipmentDetailActivity, detailResponse.postedSalesShipmentLines!!)
-                                    rvList.adapter = shipmentItemListAdapter
+                                    val shipmentItemListAdapter = ShipmentItemListAdapter(
+                                        this@ShipmentDetailActivity,
+                                        detailResponse.postedSalesShipmentLines!!
+                                    )
+                                    binding.rvList.adapter = shipmentItemListAdapter
                                 }
 
                             }

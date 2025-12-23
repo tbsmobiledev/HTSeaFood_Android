@@ -18,14 +18,15 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.htseafood.customer.R
 import com.htseafood.customer.adpter.OrderItemListAdapter
 import com.htseafood.customer.apis.ApiClient
+import com.htseafood.customer.custom.BaseActivity
 import com.htseafood.customer.custom.EqualSpacingItemDecoration
+import com.htseafood.customer.databinding.ActivityOrderDetailBinding
 import com.htseafood.customer.interfaces.DeleteItemListener
 import com.htseafood.customer.interfaces.EditListener
 import com.htseafood.customer.model.request.AddOrderRequest
@@ -40,27 +41,13 @@ import com.htseafood.customer.utils.Constants
 import com.htseafood.customer.utils.ProgressDialog
 import com.htseafood.customer.utils.SharedHelper
 import com.htseafood.customer.utils.Utils
-import kotlinx.android.synthetic.main.activity_order_detail.ivAdd
-import kotlinx.android.synthetic.main.activity_order_detail.ivBack
-import kotlinx.android.synthetic.main.activity_order_detail.ivDelete
-import kotlinx.android.synthetic.main.activity_order_detail.llView
-import kotlinx.android.synthetic.main.activity_order_detail.rvList
-import kotlinx.android.synthetic.main.activity_order_detail.tvAddress
-import kotlinx.android.synthetic.main.activity_order_detail.tvContactPerson
-import kotlinx.android.synthetic.main.activity_order_detail.tvOrderdate
-import kotlinx.android.synthetic.main.activity_order_detail.tvPDFSend
-import kotlinx.android.synthetic.main.activity_order_detail.tvPostingdate
-import kotlinx.android.synthetic.main.activity_order_detail.tvShipingdate
-import kotlinx.android.synthetic.main.activity_order_detail.tvTitle
-import kotlinx.android.synthetic.main.activity_order_detail.tvtotalAmount
-import kotlinx.android.synthetic.main.activity_order_detail.tvtotalInVatAmount
-import kotlinx.android.synthetic.main.activity_order_detail.tvtotalTaxAmount
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
-class OrderDetailActivity : AppCompatActivity(), DeleteItemListener, EditListener {
+class OrderDetailActivity : BaseActivity<ActivityOrderDetailBinding>(), DeleteItemListener,
+    EditListener {
     var id = ""
     var isrefresh = false
     var detailResponse: OrderDetailResponse? = null
@@ -82,12 +69,15 @@ class OrderDetailActivity : AppCompatActivity(), DeleteItemListener, EditListene
         }
     }
 
+    override fun inflateBinding(): ActivityOrderDetailBinding {
+        return ActivityOrderDetailBinding.inflate(layoutInflater)
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_order_detail)
 
-        ivBack.setOnClickListener {
+        binding.ivBack.setOnClickListener {
             onBackPressed()
         }
 
@@ -102,7 +92,7 @@ class OrderDetailActivity : AppCompatActivity(), DeleteItemListener, EditListene
             }
         }
 
-        ivDelete.setOnClickListener {
+        binding.ivDelete.setOnClickListener {
             val builder = android.app.AlertDialog.Builder(this)
             val confirmationText = "Are you sure you want to delete this order?"
             val blackMessageSpannable = SpannableString(confirmationText)
@@ -131,21 +121,22 @@ class OrderDetailActivity : AppCompatActivity(), DeleteItemListener, EditListene
             builder.show()
         }
 
-        rvList.addItemDecoration(
+        binding.rvList.addItemDecoration(
             EqualSpacingItemDecoration(
                 resources.getDimension(com.intuit.sdp.R.dimen._10sdp).toInt(),
                 EqualSpacingItemDecoration.VERTICAL
             )
         )
-        rvList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.rvList.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        ivAdd.setOnClickListener {
+        binding.ivAdd.setOnClickListener {
             val intent = Intent(this, AddOrderItemActivity::class.java).putExtra("orderNo", id)
                 .putExtra("orderData", Gson().toJson(detailResponse!!.salesOrderLines))
             resultLauncher.launch(intent)
         }
 
-        tvPDFSend.setOnClickListener {
+        binding.tvPDFSend.setOnClickListener {
             if (detailResponse!!.amountIncludingVAT != 0.0 && SharedHelper.getKey(
                     this,
                     Constants.CustmerEmail
@@ -350,14 +341,14 @@ class OrderDetailActivity : AppCompatActivity(), DeleteItemListener, EditListene
                                         response.body()!!.getAsJsonObject("data"),
                                         OrderDetailResponse::class.java
                                     )
-                                llView.visibility = View.VISIBLE
-                                tvTitle.text = "Order ID: #${detailResponse!!.no}"
-                                tvContactPerson.text = detailResponse!!.selltoContact
-                                tvAddress.text =
+                                binding.llView.visibility = View.VISIBLE
+                                binding.tvTitle.text = "Order ID: #${detailResponse!!.no}"
+                                binding.tvContactPerson.text = detailResponse!!.selltoContact
+                                binding.tvAddress.text =
                                     detailResponse!!.sellToAddress + ", " + detailResponse!!.sellToCity
-                                tvOrderdate.text = detailResponse!!.orderDate
-                                tvPostingdate.text = detailResponse!!.postingDate
-                                tvShipingdate.text = detailResponse!!.shipmentDate
+                                binding.tvOrderdate.text = detailResponse!!.orderDate
+                                binding.tvPostingdate.text = detailResponse!!.postingDate
+                                binding.tvShipingdate.text = detailResponse!!.shipmentDate
                                 if (detailResponse!!.salesOrderLines!!.isNotEmpty()) {
                                     val orderItemListAdapter = OrderItemListAdapter(
                                         this@OrderDetailActivity,
@@ -365,15 +356,15 @@ class OrderDetailActivity : AppCompatActivity(), DeleteItemListener, EditListene
                                         this@OrderDetailActivity,
                                         this@OrderDetailActivity
                                     )
-                                    rvList.adapter = orderItemListAdapter
-                                    rvList.visibility = View.VISIBLE
+                                    binding.rvList.adapter = orderItemListAdapter
+                                    binding.rvList.visibility = View.VISIBLE
                                 } else {
-                                    rvList.visibility = View.INVISIBLE
+                                    binding.rvList.visibility = View.INVISIBLE
                                 }
 
-                                tvtotalAmount.text = detailResponse!!.updatedAmount()
-                                tvtotalTaxAmount.text = detailResponse!!.updatedTaxAmount()
-                                tvtotalInVatAmount.text =
+                                binding.tvtotalAmount.text = detailResponse!!.updatedAmount()
+                                binding.tvtotalTaxAmount.text = detailResponse!!.updatedTaxAmount()
+                                binding.tvtotalInVatAmount.text =
                                     detailResponse!!.updatedAmountIncludingVAT()
 
                             }

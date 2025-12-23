@@ -5,55 +5,60 @@ import android.os.Bundle
 import android.text.InputType
 import android.view.MotionEvent
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.JsonObject
 import com.htseafood.customer.R
 import com.htseafood.customer.apis.ApiClient
+import com.htseafood.customer.custom.BaseActivity
+import com.htseafood.customer.databinding.ActivityLoginBinding
 import com.htseafood.customer.model.request.LoginRequest
 import com.htseafood.customer.utils.Constants
 import com.htseafood.customer.utils.ProgressDialog
 import com.htseafood.customer.utils.SharedHelper
 import com.htseafood.customer.utils.Utils
-import kotlinx.android.synthetic.main.activity_login.etPassword
-import kotlinx.android.synthetic.main.activity_login.etUsername
-import kotlinx.android.synthetic.main.activity_login.tvSignIn
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity<ActivityLoginBinding>() {
+    override fun inflateBinding(): ActivityLoginBinding {
+        return ActivityLoginBinding.inflate(layoutInflater)
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
-
-        etPassword.setOnTouchListener { v, event ->
-            if ((event.action == MotionEvent.ACTION_UP) && event.rawX >= (etPassword.right - etPassword.compoundDrawables[2].bounds.width())) {
-                if (etPassword.inputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
-                    etPassword.inputType =
+        binding.etPassword.setOnTouchListener { v, event ->
+            if ((event.action == MotionEvent.ACTION_UP) && event.rawX >= (binding.etPassword.right - binding.etPassword.compoundDrawables[2].bounds.width())) {
+                if (binding.etPassword.inputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
+                    binding.etPassword.inputType =
                         InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-                    etPassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.eye, 0)
+                    binding.etPassword.setCompoundDrawablesWithIntrinsicBounds(
+                        0, 0, R.drawable.eye, 0
+                    )
                 } else {
-                    etPassword.inputType =
+                    binding.etPassword.inputType =
                         InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-                    etPassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.hide_eye, 0)
+                    binding.etPassword.setCompoundDrawablesWithIntrinsicBounds(
+                        0, 0, R.drawable.hide_eye, 0
+                    )
                 }
-                etPassword.setSelection(etPassword.text.length)
+                binding.etPassword.setSelection(binding.etPassword.text.length)
                 true
             } else false
         }
 
-        tvSignIn.setOnClickListener {
-            if (etUsername.text.trim().toString().isEmpty()) {
+        binding.tvSignIn.setOnClickListener {
+            if (binding.etUsername.text.trim().toString().isEmpty()) {
                 Toast.makeText(
                     this, getString(R.string.please_enter_username), Toast.LENGTH_SHORT
                 ).show()
-            } else if (etPassword.text.trim().toString().isEmpty()) {
+            } else if (binding.etPassword.text.trim().toString().isEmpty()) {
                 Toast.makeText(
                     this, getString(R.string.please_enter_password), Toast.LENGTH_SHORT
                 ).show()
             } else {
                 if (Utils.isOnline(this)) {
-                    login(etUsername.text.toString(), etPassword.text.toString())
+                    login(binding.etUsername.text.toString(), binding.etPassword.text.toString())
                 } else {
                     Toast.makeText(
                         this,
@@ -82,10 +87,8 @@ class LoginActivity : AppCompatActivity() {
                     try {
                         if (!response.body()!!.get("status").asBoolean) {
                             Toast.makeText(
-                                this@LoginActivity,
-                                /*response.body()!!.get("msg").toString().replace('"', ' ').trim()*/
-                                "Login Failed",
-                                Toast.LENGTH_SHORT
+                                this@LoginActivity,/*response.body()!!.get("msg").toString().replace('"', ' ').trim()*/
+                                "Login Failed", Toast.LENGTH_SHORT
                             ).show()
                         } else {
                             Toast.makeText(

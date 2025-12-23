@@ -3,40 +3,34 @@ package com.htseafood.customer.activity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.htseafood.customer.R
 import com.htseafood.customer.adpter.InvoiceItemListAdapter
 import com.htseafood.customer.apis.ApiClient
+import com.htseafood.customer.custom.BaseActivity
 import com.htseafood.customer.custom.EqualSpacingItemDecoration
+import com.htseafood.customer.databinding.ActivityInvoiceDetailBinding
 import com.htseafood.customer.model.request.InvoiceDetailRequest
 import com.htseafood.customer.model.responses.InvoiceDetailResponse
 import com.htseafood.customer.utils.Constants
 import com.htseafood.customer.utils.ProgressDialog
 import com.htseafood.customer.utils.Utils
-import kotlinx.android.synthetic.main.activity_invoice_detail.ivBack
-import kotlinx.android.synthetic.main.activity_invoice_detail.llView
-import kotlinx.android.synthetic.main.activity_invoice_detail.rvList
-import kotlinx.android.synthetic.main.activity_invoice_detail.tvAddress
-import kotlinx.android.synthetic.main.activity_invoice_detail.tvOrderdate
-import kotlinx.android.synthetic.main.activity_invoice_detail.tvPostingdate
-import kotlinx.android.synthetic.main.activity_invoice_detail.tvTitle
-import kotlinx.android.synthetic.main.activity_invoice_detail.tvtotalAmount
-import kotlinx.android.synthetic.main.activity_invoice_detail.tvtotalInVatAmount
-import kotlinx.android.synthetic.main.activity_invoice_detail.tvtotalTaxAmount
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class InvoiceDetailActivity : AppCompatActivity() {
+class InvoiceDetailActivity : BaseActivity<ActivityInvoiceDetailBinding>() {
     var id = ""
+    override fun inflateBinding(): ActivityInvoiceDetailBinding {
+        return ActivityInvoiceDetailBinding.inflate(layoutInflater)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_invoice_detail)
 
-        ivBack.setOnClickListener {
+        binding.ivBack.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
@@ -44,13 +38,14 @@ class InvoiceDetailActivity : AppCompatActivity() {
             id = intent.getStringExtra("id").toString()
         }
 
-        rvList.addItemDecoration(
+        binding.rvList.addItemDecoration(
             EqualSpacingItemDecoration(
                 resources.getDimension(com.intuit.sdp.R.dimen._10sdp).toInt(),
                 EqualSpacingItemDecoration.VERTICAL
             )
         )
-        rvList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.rvList.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
 
         detailAPI()
@@ -84,22 +79,23 @@ class InvoiceDetailActivity : AppCompatActivity() {
                                         response.body()!!.getAsJsonObject("data"),
                                         InvoiceDetailResponse::class.java
                                     )
-                                llView.visibility = View.VISIBLE
-                                tvTitle.text = "Invoice ID: #${detailResponse.no}"
-                                tvAddress.text =
+                                binding.llView.visibility = View.VISIBLE
+                                binding.tvTitle.text = "Invoice ID: #${detailResponse.no}"
+                                binding.tvAddress.text =
                                     detailResponse.sellToAddress + ", " + detailResponse.sellToCity
-                                tvOrderdate.text = detailResponse.orderDate
-                                tvPostingdate.text = detailResponse.postingDate
+                                binding.tvOrderdate.text = detailResponse.orderDate
+                                binding.tvPostingdate.text = detailResponse.postingDate
                                 if (detailResponse.postedSalesInvoiceLines!!.isNotEmpty()) {
                                     val invoiceItemListAdapter = InvoiceItemListAdapter(
                                         this@InvoiceDetailActivity,
                                         detailResponse.postedSalesInvoiceLines
                                     )
-                                    rvList.adapter = invoiceItemListAdapter
+                                    binding.rvList.adapter = invoiceItemListAdapter
                                 }
-                                tvtotalAmount.text = detailResponse.updatedAmount()
-                                tvtotalTaxAmount.text = detailResponse.updatedTaxAmount()
-                                tvtotalInVatAmount.text = detailResponse.updatedAmountIncludingVAT()
+                                binding.tvtotalAmount.text = detailResponse.updatedAmount()
+                                binding.tvtotalTaxAmount.text = detailResponse.updatedTaxAmount()
+                                binding.tvtotalInVatAmount.text =
+                                    detailResponse.updatedAmountIncludingVAT()
                             }
                         } catch (e: Exception) {
                             e.printStackTrace()

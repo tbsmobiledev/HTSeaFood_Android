@@ -16,8 +16,8 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
@@ -26,6 +26,8 @@ import com.google.gson.reflect.TypeToken
 import com.htseafood.customer.R
 import com.htseafood.customer.adpter.ItemListAdapter
 import com.htseafood.customer.apis.ApiClient
+import com.htseafood.customer.custom.BaseActivity
+import com.htseafood.customer.databinding.ActivityAddOrderItemBinding
 import com.htseafood.customer.model.request.AddItemRequest
 import com.htseafood.customer.model.request.DeleteItemRequest
 import com.htseafood.customer.model.request.SearchOrderRequest
@@ -35,27 +37,11 @@ import com.htseafood.customer.model.responses.SalesOrderLinesItem
 import com.htseafood.customer.utils.Constants
 import com.htseafood.customer.utils.ProgressDialog
 import com.htseafood.customer.utils.Utils
-import kotlinx.android.synthetic.main.activity_add_order_item.et_barcode
-import kotlinx.android.synthetic.main.activity_add_order_item.evQuantity
-import kotlinx.android.synthetic.main.activity_add_order_item.ivBack
-import kotlinx.android.synthetic.main.activity_add_order_item.iv_clean
-import kotlinx.android.synthetic.main.activity_add_order_item.llEditDelete
-import kotlinx.android.synthetic.main.activity_add_order_item.tvAdd
-import kotlinx.android.synthetic.main.activity_add_order_item.tvCasePack
-import kotlinx.android.synthetic.main.activity_add_order_item.tvDelete
-import kotlinx.android.synthetic.main.activity_add_order_item.tvDescription
-import kotlinx.android.synthetic.main.activity_add_order_item.tvEdit
-import kotlinx.android.synthetic.main.activity_add_order_item.tvNo
-import kotlinx.android.synthetic.main.activity_add_order_item.tvQtyOnHand
-import kotlinx.android.synthetic.main.activity_add_order_item.tvSearchNo
-import kotlinx.android.synthetic.main.activity_add_order_item.tvUPC
-import kotlinx.android.synthetic.main.activity_add_order_item.tvUnitPrice
-import kotlinx.android.synthetic.main.activity_add_order_item.tvUnitofMeasure
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AddOrderItemActivity : AppCompatActivity() {
+class AddOrderItemActivity : BaseActivity<ActivityAddOrderItemBinding>() {
     private var itemArrayList = ArrayList<OrderItemResponse>()
     private val getArray: TypeToken<ArrayList<OrderItemResponse?>?> =
         object : TypeToken<ArrayList<OrderItemResponse?>?>() {}
@@ -65,28 +51,31 @@ class AddOrderItemActivity : AppCompatActivity() {
     var foundItem: SalesOrderLinesItem? = null
     var orderNo = ""
     var selectedItemNo = ""
+    override fun inflateBinding(): ActivityAddOrderItemBinding {
+        return ActivityAddOrderItemBinding.inflate(layoutInflater)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_order_item)
 
-        ivBack.setOnClickListener {
-            onBackPressed()
+        binding.ivBack.setOnClickListener {
+            handleBackPressed()
         }
         if (intent != null) {
             orderNo = intent.getStringExtra("orderNo").toString()
             orderArrayList =
                 Gson().fromJson(intent.getStringExtra("orderData").toString(), getOrder.type)
         }
-        et_barcode.requestFocus()
+        binding.etBarcode.requestFocus()
 
-        et_barcode.addTextChangedListener(object : TextWatcher {
+        binding.etBarcode.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 val text = s.toString()
                 if (text.isEmpty()) {
-                    iv_clean.visibility = View.INVISIBLE
+                    binding.ivClean.visibility = View.INVISIBLE
                 } else {
-                    iv_clean.visibility = View.VISIBLE
+                    binding.ivClean.visibility = View.VISIBLE
                 }
             }
 
@@ -95,49 +84,49 @@ class AddOrderItemActivity : AppCompatActivity() {
             }
         })
 
-        et_barcode.setOnEditorActionListener { textView, actionId, event ->
+        binding.etBarcode.setOnEditorActionListener { textView, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE || event != null && event.keyCode == KeyEvent.KEYCODE_ENTER) {
                 // Code to be executed when the Enter key is pressed
                 searchItemNoAPI()
-                Utils.hideSoftKeyboard(this@AddOrderItemActivity, et_barcode)
+                Utils.hideSoftKeyboard(this@AddOrderItemActivity, binding.etBarcode)
                 return@setOnEditorActionListener true
             }
             false
         }
 
-        iv_clean.setOnClickListener {
-            et_barcode.setText("")
+        binding.ivClean.setOnClickListener {
+            binding.etBarcode.setText("")
         }
 
-        tvSearchNo.setOnClickListener {
+        binding.tvSearchNo.setOnClickListener {
 
-            if (et_barcode.text.toString().isEmpty()) {
+            if (binding.etBarcode.text.toString().isEmpty()) {
                 Toast.makeText(this, "Please enter UPC or Item No", Toast.LENGTH_SHORT).show()
             } else {
                 searchItemNoAPI()
             }
-            Utils.hideSoftKeyboard(this, et_barcode)
+            Utils.hideSoftKeyboard(this, binding.etBarcode)
         }
 
-        tvAdd.setOnClickListener {
-            if (evQuantity.text.toString().isEmpty()) {
+        binding.tvAdd.setOnClickListener {
+            if (binding.evQuantity.text.toString().isEmpty()) {
                 Toast.makeText(this, "Please enter quantity", Toast.LENGTH_SHORT).show()
             } else {
                 addQuantity()
             }
-            Utils.hideSoftKeyboard(this, et_barcode)
+            Utils.hideSoftKeyboard(this, binding.etBarcode)
         }
 
-        tvEdit.setOnClickListener {
-            if (evQuantity.text.toString().isEmpty()) {
+        binding.tvEdit.setOnClickListener {
+            if (binding.evQuantity.text.toString().isEmpty()) {
                 Toast.makeText(this, "Please enter quantity", Toast.LENGTH_SHORT).show()
             } else {
-                updateOrder(foundItem!!.lineNo, evQuantity.text.toString())
+                updateOrder(foundItem!!.lineNo, binding.evQuantity.text.toString())
             }
 
         }
 
-        tvDelete.setOnClickListener {
+        binding.tvDelete.setOnClickListener {
             val builder = android.app.AlertDialog.Builder(this)
             builder.setTitle("Delete Order Item")
             builder.setMessage("Are you sure you want to delete this order item?")
@@ -159,8 +148,7 @@ class AddOrderItemActivity : AppCompatActivity() {
 
     }
 
-    override fun onBackPressed() {
-        //super.onBackPressed()
+    override fun handleBackPressed(callback: OnBackPressedCallback?) {        //super.onBackPressed()
         val resultIntent = Intent()
         setResult(RESULT_OK, resultIntent)
         finish()
@@ -228,7 +216,7 @@ class AddOrderItemActivity : AppCompatActivity() {
                 Constants.BASE_URL
             )!!.webservices.addItem(
                 AddItemRequest(
-                    orderNo, evQuantity.text.toString(),
+                    orderNo, binding.evQuantity.text.toString(),
                     selectedItemNo
                 )
             ).enqueue(object : Callback<JsonObject> {
@@ -350,9 +338,9 @@ class AddOrderItemActivity : AppCompatActivity() {
     }
 
     private fun searchItemNoAPI() {
-        Log.d("TAG", "searchItemNoAPI: " + et_barcode.text.toString().trim())
+        Log.d("TAG", "searchItemNoAPI: " + binding.etBarcode.text.toString().trim())
         foundItem =
-            orderArrayList.find { it.uPC == et_barcode.text.toString() || it.itemNo2 == et_barcode.text.toString() }
+            orderArrayList.find { it.uPC == binding.etBarcode.text.toString() || it.itemNo2 == binding.etBarcode.text.toString() }
         if (foundItem != null) {
             findData(foundItem!!)
         } else {
@@ -362,7 +350,7 @@ class AddOrderItemActivity : AppCompatActivity() {
                     Constants.BASE_URL
                 )!!.webservices.searchItemNo(
                     SearchOrderRequest(
-                        et_barcode.text.toString().trim()
+                        binding.etBarcode.text.toString().trim()
                     )
                 ).enqueue(object : Callback<JsonObject> {
                     override fun onResponse(
@@ -439,25 +427,25 @@ class AddOrderItemActivity : AppCompatActivity() {
     }
 
     private fun findData(item: SalesOrderLinesItem) {
-        et_barcode.setText("")
-        iv_clean.visibility = View.INVISIBLE
-        tvUPC.text = item.uPC
-        tvNo.text = item.itemNo2
-        tvDescription.text = item.description
-        tvUnitofMeasure.text = item.unitOfMeasure
-        tvUnitPrice.text = item.updatedUnitPrice()
-        tvQtyOnHand.text = item.qtyOnHand.toString()
-        tvCasePack.text = item.casePack
-        evQuantity.setText(item.quantity.toString())
-        evQuantity.isEnabled = true
-        tvAdd.visibility = View.GONE
-        llEditDelete.visibility = View.VISIBLE
-        evQuantity.requestFocus()
+        binding.etBarcode.setText("")
+        binding.ivClean.visibility = View.INVISIBLE
+        binding.tvUPC.text = item.uPC
+        binding.tvNo.text = item.itemNo2
+        binding.tvDescription.text = item.description
+        binding.tvUnitofMeasure.text = item.unitOfMeasure
+        binding.tvUnitPrice.text = item.updatedUnitPrice()
+        binding.tvQtyOnHand.text = item.qtyOnHand.toString()
+        binding.tvCasePack.text = item.casePack
+        binding.evQuantity.setText(item.quantity.toString())
+        binding.evQuantity.isEnabled = true
+        binding.tvAdd.visibility = View.GONE
+        binding.llEditDelete.visibility = View.VISIBLE
+        binding.evQuantity.requestFocus()
         selectedItemNo = item.no.toString()
 
         Handler(Looper.getMainLooper()).postDelayed({
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.showSoftInput(evQuantity, InputMethodManager.SHOW_IMPLICIT)
+            imm.showSoftInput(binding.evQuantity, InputMethodManager.SHOW_IMPLICIT)
 
         }, 500)
 
@@ -495,43 +483,43 @@ class AddOrderItemActivity : AppCompatActivity() {
     }
 
     private fun setData(item: OrderItemResponse) {
-        et_barcode.setText("")
-        iv_clean.visibility = View.INVISIBLE
-        tvUPC.text = item.uPC
-        tvNo.text = item.itemNo2
-        tvDescription.text = item.description
-        tvUnitofMeasure.text = item.baseUnitOfMeasure
-        tvCasePack.text = item.casePack
-        tvQtyOnHand.text = item.qtyOnHand.toString()
-        tvUnitPrice.text = item.updatedUnitPrice()
-        evQuantity.setText("")
-        evQuantity.isEnabled = true
-        tvAdd.visibility = View.VISIBLE
-        llEditDelete.visibility = View.GONE
-        evQuantity.requestFocus()
+        binding.etBarcode.setText("")
+        binding.ivClean.visibility = View.INVISIBLE
+        binding.tvUPC.text = item.uPC
+        binding.tvNo.text = item.itemNo2
+        binding.tvDescription.text = item.description
+        binding.tvUnitofMeasure.text = item.baseUnitOfMeasure
+        binding.tvCasePack.text = item.casePack
+        binding.tvQtyOnHand.text = item.qtyOnHand.toString()
+        binding.tvUnitPrice.text = item.updatedUnitPrice()
+        binding.evQuantity.setText("")
+        binding.evQuantity.isEnabled = true
+        binding.tvAdd.visibility = View.VISIBLE
+        binding.llEditDelete.visibility = View.GONE
+        binding.evQuantity.requestFocus()
         selectedItemNo = item.no.toString()
 
         Handler(Looper.getMainLooper()).postDelayed({
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.showSoftInput(evQuantity, InputMethodManager.SHOW_IMPLICIT)
+            imm.showSoftInput(binding.evQuantity, InputMethodManager.SHOW_IMPLICIT)
 
         }, 500)
 
     }
 
     private fun emptyData() {
-        et_barcode.requestFocus()
-        et_barcode.setText("")
-        iv_clean.visibility = View.INVISIBLE
-        tvUPC.text = ""
-        tvNo.text = ""
-        tvDescription.text = ""
-        tvUnitofMeasure.text = ""
-        tvUnitPrice.text = ""
-        evQuantity.setText("")
-        evQuantity.isEnabled = false
-        tvAdd.visibility = View.GONE
-        llEditDelete.visibility = View.GONE
+        binding.etBarcode.requestFocus()
+        binding.etBarcode.setText("")
+        binding.ivClean.visibility = View.INVISIBLE
+        binding.tvUPC.text = ""
+        binding.tvNo.text = ""
+        binding.tvDescription.text = ""
+        binding.tvUnitofMeasure.text = ""
+        binding.tvUnitPrice.text = ""
+        binding.evQuantity.setText("")
+        binding.evQuantity.isEnabled = false
+        binding.tvAdd.visibility = View.GONE
+        binding.llEditDelete.visibility = View.GONE
 
     }
 }
