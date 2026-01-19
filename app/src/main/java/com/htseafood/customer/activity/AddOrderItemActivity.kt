@@ -36,6 +36,7 @@ import com.htseafood.customer.model.responses.OrderItemResponse
 import com.htseafood.customer.model.responses.SalesOrderLinesItem
 import com.htseafood.customer.utils.Constants
 import com.htseafood.customer.utils.ProgressDialog
+import com.htseafood.customer.utils.SharedHelper
 import com.htseafood.customer.utils.Utils
 import retrofit2.Call
 import retrofit2.Callback
@@ -350,7 +351,8 @@ class AddOrderItemActivity : BaseActivity<ActivityAddOrderItemBinding>() {
                     Constants.BASE_URL
                 )!!.webservices.searchItemNo(
                     SearchOrderRequest(
-                        binding.etBarcode.text.toString().trim()
+                        binding.etBarcode.text.toString().trim(),
+                        SharedHelper.getKey(this, Constants.CustmerPriceGroup)
                     )
                 ).enqueue(object : Callback<JsonObject> {
                     override fun onResponse(

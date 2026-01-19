@@ -115,6 +115,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>() {
                                     .toString().replace('"', ' ').trim()
                             )
                             SharedHelper.putKey(
+                                this@LoginActivity,
+                                Constants.CustmerPriceGroup,
+                                response.body()!!.getAsJsonObject("data").get("priceGroup")
+                                    .toString().replace('"', ' ').trim()
+                            )
+                            SharedHelper.putKey(
                                 this@LoginActivity, Constants.IS_LOGIN, true
                             )
 

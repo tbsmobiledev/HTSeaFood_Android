@@ -27,6 +27,7 @@ class Constants {
         const val CustmerNo = "custmerNo"
         const val CustmerName = "custmerName"
         const val CustmerEmail = "custmerEmail"
+        const val CustmerPriceGroup = "custmerPriceGroup"
 
     }
 
