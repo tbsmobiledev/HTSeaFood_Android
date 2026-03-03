@@ -518,6 +518,8 @@ class AddOrderItemActivity : BaseActivity<ActivityAddOrderItemBinding>() {
         binding.tvDescription.text = ""
         binding.tvUnitofMeasure.text = ""
         binding.tvUnitPrice.text = ""
+        binding.tvCasePack.text = ""
+        binding.tvQtyOnHand.text = ""
         binding.evQuantity.setText("")
         binding.evQuantity.isEnabled = false
         binding.tvAdd.visibility = View.GONE
